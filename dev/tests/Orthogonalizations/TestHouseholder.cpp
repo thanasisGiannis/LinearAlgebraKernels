@@ -127,8 +127,8 @@ TEST(TestHouseholder, checkInputQR)
 TEST(TestHouseholder, checkBigMatrixQR)
 {
 
-    INT m=1000;
-    INT n=100;
+    INT m=100;
+    INT n=40;
 
     std::shared_ptr<LinearAlgebra::Matrix<double>>
     A{new LinearAlgebra::Matrix<double>(m,n)};

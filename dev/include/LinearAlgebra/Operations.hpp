@@ -37,53 +37,51 @@ namespace Operation=blas;
 template <class fp>
 using vector = thrust::device_vector<fp>;
 
-static std::shared_ptr<blas::Queue> queue = std::make_shared<blas::Queue>();
-
-typedef blasQueue = (LinearAlgebra::queue).get();
+static blas::Queue blasQueue(0);
 
 // =============================================================================
 // Level 1 BLAS template implementations
-#define asum(...)  asum(__VA_ARGS__, blasQueue )
-#define axpy(...)  axpy(__VA_ARGS__, blasQueue)
-#define copy(...)  copy(__VA_ARGS__, blasQueue)
-#define dot(...)   dot(__VA_ARGS__, blasQueue)
-#define dotu(...)  dotu(__VA_ARGS__, blasQueue)
-#define iamax(...) iamax(__VA_ARGS__, blasQueue)
-#define nrm2(...)  nrm2(__VA_ARGS__, blasQueue)
-#define rot(...)   rot(__VA_ARGS__, blasQueue)
-#define rotg(...)  rotg(__VA_ARGS__, blasQueue)
-#define rotm(...)  rotm(__VA_ARGS__, blasQueue)
-#define rotmg(...) rotmg(__VA_ARGS__, blasQueue)
-#define scal(...)  scal(__VA_ARGS__, blasQueue)
-#define swap(...)  swap(__VA_ARGS__, blasQueue)
+#define asum(...)  asum(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define axpy(...)  axpy(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define copy(...)  copy(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define dot(...)   dot(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define dotu(...)  dotu(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define iamax(...) iamax(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define nrm2(...)  nrm2(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define rot(...)   rot(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define rotg(...)  rotg(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define rotm(...)  rotm(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define rotmg(...) rotmg(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define scal(...)  scal(__VA_ARGS__, LinearAlgebra::blasQueue )
+//#define swap(...)  swap(__VA_ARGS__, LinearAlgebra::blasQueue )
 
 // =============================================================================
 // Level 2 BLAS template implementations
 
-#define gemv(...)  gemv(__VA_ARGS__, blasQueue)
-#define ger(...)   ger(__VA_ARGS__, blasQueue)
-#define geru(...)  geru(__VA_ARGS__, blasQueue)
-#define hemv(...)  hemv(__VA_ARGS__, blasQueue)
-#define her(...)   her(__VA_ARGS__, blasQueue)
-#define her2(...)  her2(__VA_ARGS__, blasQueue)
-#define symv(...)  symv(__VA_ARGS__, blasQueue)
-#define syr(...)   syr(__VA_ARGS__, blasQueue)
-#define syr2(...)  syr2(__VA_ARGS__, blasQueue)
-#define trmv(...)  trmv(__VA_ARGS__, blasQueue)
-#define trsv(...)  trsv(__VA_ARGS__, blasQueue)
+#define gemv(...)  gemv(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define ger(...)   ger(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define geru(...)  geru(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define hemv(...)  hemv(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define her(...)   her(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define her2(...)  her2(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define symv(...)  symv(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define syr(...)   syr(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define syr2(...)  syr2(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define trmv(...)  trmv(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define trsv(...)  trsv(__VA_ARGS__, LinearAlgebra::blasQueue )
 
 // =============================================================================
 // Level 3 BLAS template implementations
 
-#define gemm(...)  gemm(__VA_ARGS__, blasQueue)
-#define hemm(...)  hemm(__VA_ARGS__, blasQueue)
-#define herk(...)  herk(__VA_ARGS__, blasQueue)
-#define her2k(...) her2k(__VA_ARGS__, blasQueue)
-#define symm(...)  symm(__VA_ARGS__, blasQueue)
-#define syrk(...)  syrk(__VA_ARGS__, blasQueue)
-#define syr2k(...) syr2k(__VA_ARGS__, blasQueue)
-#define trmm(...)  trmm(__VA_ARGS__, blasQueue)
-#define trsm(...)  trsm(__VA_ARGS__, blasQueue)
+#define gemm(...)  gemm(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define hemm(...)  hemm(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define herk(...)  herk(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define her2k(...) her2k(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define symm(...)  symm(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define syrk(...)  syrk(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define syr2k(...) syr2k(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define trmm(...)  trmm(__VA_ARGS__, LinearAlgebra::blasQueue )
+#define trsm(...)  trsm(__VA_ARGS__, LinearAlgebra::blasQueue )
 
 #else
 // ToDo: choose between host and device vectors
