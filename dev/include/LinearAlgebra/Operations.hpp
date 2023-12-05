@@ -27,7 +27,6 @@ namespace LinearAlgebra {
 // e.g. instead of blas::gemm()
 // use LinearAlgebra::gemm()
 using namespace thrust;
-namespace Operation=blas;
 
 // defines are from device.hh of BLASPP library
 #if defined( BLAS_HAVE_CUBLAS ) \
@@ -83,10 +82,13 @@ static blas::Queue blasQueue(0);
 #define trmm(...)  trmm(__VA_ARGS__, LinearAlgebra::blasQueue )
 #define trsm(...)  trsm(__VA_ARGS__, LinearAlgebra::blasQueue )
 
+namespace Operation=blas;
+
 #else
 // ToDo: choose between host and device vectors
 template <class fp>
 using vector = thrust::host_vector<fp>;
+namespace Operation=blas;
 #endif
 
 }
