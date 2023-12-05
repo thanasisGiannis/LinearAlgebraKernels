@@ -37,7 +37,7 @@ namespace Operation=blas;
 template <class fp>
 using vector = thrust::device_vector<fp>;
 
-static std::shared_ptr<blas::Queue> queue{new blas::Queue()};
+static std::shared_ptr<blas::Queue> queue = std::make_shared(new blas::Queue());
 
 blas::Queue Q = queue.get();
 
