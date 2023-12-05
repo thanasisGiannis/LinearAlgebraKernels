@@ -27,6 +27,9 @@ namespace Operation=blas;
     || defined( BLAS_HAVE_ROCBLAS ) \
     || defined( BLAS_HAVE_SYCL )
 
+template <class fp>
+using vector = thrust::device_vector<fp>;
+
 static std::shared_ptr<blas::Queue> queue{new blas::Queue()};
 
 // =============================================================================
@@ -72,10 +75,6 @@ static std::shared_ptr<blas::Queue> queue{new blas::Queue()};
 #define syr2k(...) herk(__VA_ARGS__, *LinearAlgebra::queue)
 #define trmm(...)  hemm(__VA_ARGS__, *LinearAlgebra::queue)
 #define trsm(...)  gemm(__VA_ARGS__, *LinearAlgebra::queue)
-
-
-template <class fp>
-using vector = thrust::device_vector<fp>;
 
 #else
 // ToDo: choose between host and device vectors
