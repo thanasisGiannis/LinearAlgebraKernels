@@ -37,53 +37,53 @@ namespace Operation=blas;
 template <class fp>
 using vector = thrust::device_vector<fp>;
 
-static std::shared_ptr<blas::Queue> queue = std::make_shared(new blas::Queue());
+static std::shared_ptr<blas::Queue> queue = std::make_shared<blas::Queue>();
 
-blas::Queue Q = queue.get();
+typedef blasQueue = (LinearAlgebra::queue).get();
 
 // =============================================================================
 // Level 1 BLAS template implementations
-#define asum(...)  asum(__VA_ARGS__, Q )
-#define axpy(...)  axpy(__VA_ARGS__, Q)
-#define copy(...)  copy(__VA_ARGS__, Q)
-#define dot(...)   dot(__VA_ARGS__, Q)
-#define dotu(...)  dotu(__VA_ARGS__, Q)
-#define iamax(...) iamax(__VA_ARGS__, Q)
-#define nrm2(...)  nrm2(__VA_ARGS__, Q)
-#define rot(...)   rot(__VA_ARGS__, Q)
-#define rotg(...)  rotg(__VA_ARGS__, Q)
-#define rotm(...)  rotm(__VA_ARGS__, Q)
-#define rotmg(...) rotmg(__VA_ARGS__, Q)
-#define scal(...)  scal(__VA_ARGS__, Q)
-#define swap(...)  swap(__VA_ARGS__, Q)
+#define asum(...)  asum(__VA_ARGS__, blasQueue )
+#define axpy(...)  axpy(__VA_ARGS__, blasQueue)
+#define copy(...)  copy(__VA_ARGS__, blasQueue)
+#define dot(...)   dot(__VA_ARGS__, blasQueue)
+#define dotu(...)  dotu(__VA_ARGS__, blasQueue)
+#define iamax(...) iamax(__VA_ARGS__, blasQueue)
+#define nrm2(...)  nrm2(__VA_ARGS__, blasQueue)
+#define rot(...)   rot(__VA_ARGS__, blasQueue)
+#define rotg(...)  rotg(__VA_ARGS__, blasQueue)
+#define rotm(...)  rotm(__VA_ARGS__, blasQueue)
+#define rotmg(...) rotmg(__VA_ARGS__, blasQueue)
+#define scal(...)  scal(__VA_ARGS__, blasQueue)
+#define swap(...)  swap(__VA_ARGS__, blasQueue)
 
 // =============================================================================
 // Level 2 BLAS template implementations
 
-#define gemv(...)  gemv(__VA_ARGS__, Q)
-#define ger(...)   ger(__VA_ARGS__, Q)
-#define geru(...)  geru(__VA_ARGS__, Q)
-#define hemv(...)  hemv(__VA_ARGS__, Q)
-#define her(...)   her(__VA_ARGS__, Q)
-#define her2(...)  her2(__VA_ARGS__, Q)
-#define symv(...)  symv(__VA_ARGS__, Q)
-#define syr(...)   syr(__VA_ARGS__, Q)
-#define syr2(...)  syr2(__VA_ARGS__, Q)
-#define trmv(...)  trmv(__VA_ARGS__, Q)
-#define trsv(...)  trsv(__VA_ARGS__, Q)
+#define gemv(...)  gemv(__VA_ARGS__, blasQueue)
+#define ger(...)   ger(__VA_ARGS__, blasQueue)
+#define geru(...)  geru(__VA_ARGS__, blasQueue)
+#define hemv(...)  hemv(__VA_ARGS__, blasQueue)
+#define her(...)   her(__VA_ARGS__, blasQueue)
+#define her2(...)  her2(__VA_ARGS__, blasQueue)
+#define symv(...)  symv(__VA_ARGS__, blasQueue)
+#define syr(...)   syr(__VA_ARGS__, blasQueue)
+#define syr2(...)  syr2(__VA_ARGS__, blasQueue)
+#define trmv(...)  trmv(__VA_ARGS__, blasQueue)
+#define trsv(...)  trsv(__VA_ARGS__, blasQueue)
 
 // =============================================================================
 // Level 3 BLAS template implementations
 
-#define gemm(...)  gemm(__VA_ARGS__, Q)
-#define hemm(...)  hemm(__VA_ARGS__, Q)
-#define herk(...)  herk(__VA_ARGS__, Q)
-#define her2k(...) her2k(__VA_ARGS__, Q)
-#define symm(...)  symm(__VA_ARGS__, Q)
-#define syrk(...)  syrk(__VA_ARGS__, Q)
-#define syr2k(...) syr2k(__VA_ARGS__, Q)
-#define trmm(...)  trmm(__VA_ARGS__, Q)
-#define trsm(...)  trsm(__VA_ARGS__, Q)
+#define gemm(...)  gemm(__VA_ARGS__, blasQueue)
+#define hemm(...)  hemm(__VA_ARGS__, blasQueue)
+#define herk(...)  herk(__VA_ARGS__, blasQueue)
+#define her2k(...) her2k(__VA_ARGS__, blasQueue)
+#define symm(...)  symm(__VA_ARGS__, blasQueue)
+#define syrk(...)  syrk(__VA_ARGS__, blasQueue)
+#define syr2k(...) syr2k(__VA_ARGS__, blasQueue)
+#define trmm(...)  trmm(__VA_ARGS__, blasQueue)
+#define trsm(...)  trsm(__VA_ARGS__, blasQueue)
 
 #else
 // ToDo: choose between host and device vectors
