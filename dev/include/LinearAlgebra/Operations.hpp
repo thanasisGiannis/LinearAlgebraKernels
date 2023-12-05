@@ -46,7 +46,7 @@ static blas::Queue blasQueue(0);
 //#define copy(...)  copy(__VA_ARGS__, LinearAlgebra::blasQueue )
 #define dot(...)   dot(__VA_ARGS__, LinearAlgebra::blasQueue )
 #define dotu(...)  dotu(__VA_ARGS__, LinearAlgebra::blasQueue )
-#define iamax(...) iamax(__VA_ARGS__, LinearAlgebra::blasQueue )
+//#define iamax(...) iamax(__VA_ARGS__, LinearAlgebra::blasQueue )
 #define nrm2(...)  nrm2(__VA_ARGS__, LinearAlgebra::blasQueue )
 #define rot(...)   rot(__VA_ARGS__, LinearAlgebra::blasQueue )
 #define rotg(...)  rotg(__VA_ARGS__, LinearAlgebra::blasQueue )
