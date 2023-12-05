@@ -43,7 +43,7 @@ static blas::Queue blasQueue(0);
 // Level 1 BLAS template implementations
 #define asum(...)  asum(__VA_ARGS__, LinearAlgebra::blasQueue )
 #define axpy(...)  axpy(__VA_ARGS__, LinearAlgebra::blasQueue )
-#define copy(...)  copy(__VA_ARGS__, LinearAlgebra::blasQueue )
+//#define copy(...)  copy(__VA_ARGS__, LinearAlgebra::blasQueue )
 #define dot(...)   dot(__VA_ARGS__, LinearAlgebra::blasQueue )
 #define dotu(...)  dotu(__VA_ARGS__, LinearAlgebra::blasQueue )
 #define iamax(...) iamax(__VA_ARGS__, LinearAlgebra::blasQueue )
