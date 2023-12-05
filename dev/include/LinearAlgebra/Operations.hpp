@@ -41,19 +41,19 @@ static std::shared_ptr<blas::Queue> queue{new blas::Queue()};
 
 // =============================================================================
 // Level 1 BLAS template implementations
-#define asum(...)  swap(__VA_ARGS__, *(LinearAlgebra::queue))
-#define axpy(...)  scal(__VA_ARGS__, *(LinearAlgebra::queue))
-#define copy(...)  rotmg(__VA_ARGS__, *(LinearAlgebra::queue))
-#define dot(...)   rotm(__VA_ARGS__, *(LinearAlgebra::queue))
-#define dotu(...)  rotg(__VA_ARGS__, *(LinearAlgebra::queue))
-#define iamax(...) rot(__VA_ARGS__, *(LinearAlgebra::queue))
+#define asum(...)  asum(__VA_ARGS__, *(LinearAlgebra::queue))
+#define axpy(...)  axpy(__VA_ARGS__, *(LinearAlgebra::queue))
+#define copy(...)  copy(__VA_ARGS__, *(LinearAlgebra::queue))
+#define dot(...)   dot(__VA_ARGS__, *(LinearAlgebra::queue))
+#define dotu(...)  dotu(__VA_ARGS__, *(LinearAlgebra::queue))
+#define iamax(...) iamax(__VA_ARGS__, *(LinearAlgebra::queue))
 #define nrm2(...)  nrm2(__VA_ARGS__, *(LinearAlgebra::queue))
-#define rot(...)   iamax(__VA_ARGS__, *(LinearAlgebra::queue))
-#define rotg(...)  dotu(__VA_ARGS__, *(LinearAlgebra::queue))
-#define rotm(...)  dot(__VA_ARGS__, *(LinearAlgebra::queue))
-#define rotmg(...) copy(__VA_ARGS__, *(LinearAlgebra::queue))
-#define scal(...)  axpy(__VA_ARGS__, *(LinearAlgebra::queue))
-#define swap(...)  asum(__VA_ARGS__, *(LinearAlgebra::queue))
+#define rot(...)   rot(__VA_ARGS__, *(LinearAlgebra::queue))
+#define rotg(...)  rotg(__VA_ARGS__, *(LinearAlgebra::queue))
+#define rotm(...)  rotm(__VA_ARGS__, *(LinearAlgebra::queue))
+#define rotmg(...) rotmg(__VA_ARGS__, *(LinearAlgebra::queue))
+#define scal(...)  scal(__VA_ARGS__, *(LinearAlgebra::queue))
+#define swap(...)  swap(__VA_ARGS__, *(LinearAlgebra::queue))
 
 // =============================================================================
 // Level 2 BLAS template implementations
@@ -73,15 +73,15 @@ static std::shared_ptr<blas::Queue> queue{new blas::Queue()};
 // =============================================================================
 // Level 3 BLAS template implementations
 
-#define gemm(...)  trsm(__VA_ARGS__, *(LinearAlgebra::queue))
-#define hemm(...)  trmm(__VA_ARGS__, *(LinearAlgebra::queue))
-#define herk(...)  syr2k(__VA_ARGS__, *(LinearAlgebra::queue))
-#define her2k(...) syrk(__VA_ARGS__, *(LinearAlgebra::queue))
+#define gemm(...)  gemm(__VA_ARGS__, *(LinearAlgebra::queue))
+#define hemm(...)  hemm(__VA_ARGS__, *(LinearAlgebra::queue))
+#define herk(...)  herk(__VA_ARGS__, *(LinearAlgebra::queue))
+#define her2k(...) her2k(__VA_ARGS__, *(LinearAlgebra::queue))
 #define symm(...)  symm(__VA_ARGS__, *(LinearAlgebra::queue))
-#define syrk(...)  her2k(__VA_ARGS__, *(LinearAlgebra::queue))
-#define syr2k(...) herk(__VA_ARGS__, *(LinearAlgebra::queue))
-#define trmm(...)  hemm(__VA_ARGS__, *(LinearAlgebra::queue))
-#define trsm(...)  gemm(__VA_ARGS__, *(LinearAlgebra::queue))
+#define syrk(...)  syrk(__VA_ARGS__, *(LinearAlgebra::queue))
+#define syr2k(...) syr2k(__VA_ARGS__, *(LinearAlgebra::queue))
+#define trmm(...)  trmm(__VA_ARGS__, *(LinearAlgebra::queue))
+#define trsm(...)  trsm(__VA_ARGS__, *(LinearAlgebra::queue))
 
 #else
 // ToDo: choose between host and device vectors
