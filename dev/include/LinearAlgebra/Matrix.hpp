@@ -54,7 +54,7 @@ public:
     auto end()  {return raw_data.end();}
     INT ld(){return rows;}
     auto data(){return raw_data.data();}
-    auto& operator[](INT index) {return raw_data[index];}
+    auto operator[](INT index) {return raw_data[index];}
     auto Rows(){return rows;}
     auto Cols(){return cols;}
     auto clear()
