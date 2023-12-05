@@ -53,7 +53,7 @@ public:
     auto begin(){return raw_data.begin();}
     auto end()  {return raw_data.end();}
     INT ld(){return rows;}
-    auto data(){return raw_data.data();}
+    auto data(){return dynamic_cast<fp*>(raw_data.data());}
     auto operator[](INT index) {return raw_data[index];}
     auto Rows(){return rows;}
     auto Cols(){return cols;}
