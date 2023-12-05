@@ -53,7 +53,16 @@ public:
     auto begin(){return raw_data.begin();}
     auto end()  {return raw_data.end();}
     INT ld(){return rows;}
-    fp* data(){return static_cast<fp*>(raw_data.data());}
+    fp* data()
+    {
+        #if defined( BLAS_HAVE_CUBLAS ) \
+            || defined( BLAS_HAVE_ROCBLAS ) \
+            || defined( BLAS_HAVE_SYCL )
+            return static_cast<fp*>(raw_data.get());
+        #else
+            raw_data.data();
+        #endif
+    }
     auto operator[](INT index) {return raw_data[index];}
     auto Rows(){return rows;}
     auto Cols(){return cols;}
