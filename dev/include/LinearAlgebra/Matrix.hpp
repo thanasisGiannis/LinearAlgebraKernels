@@ -63,7 +63,7 @@ public:
         #if defined( BLAS_HAVE_CUBLAS ) \
             || defined( BLAS_HAVE_ROCBLAS ) \
             || defined( BLAS_HAVE_SYCL )
-            return static_cast<fp*>(raw_pointer_cast(raw_data.data()));
+            return static_cast<fp*>(raw_pointer_cast(raw_data.data()).get());
         #else
             raw_data.data();
         #endif
