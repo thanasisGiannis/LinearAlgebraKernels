@@ -92,7 +92,7 @@ public:
 #if defined( BLAS_HAVE_CUBLAS ) \
     || defined( BLAS_HAVE_ROCBLAS ) \
     || defined( BLAS_HAVE_SYCL )
-        vector<fp>::iterator i = raw_data.end;
+        vector<fp>::iterator i = raw_data.end();
         return i;
 #else
         return raw_data.end();
