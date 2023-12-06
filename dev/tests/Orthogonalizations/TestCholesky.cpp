@@ -38,7 +38,7 @@ TEST(TestCholesky, QR)
     {
         for(uint j=0;j<n;j++)
         {
-            EXPECT_NEAR(0.0,(*C)[i+j*(C->ld())],1e-12*normInf);
+            EXPECT_NEAR(0.0,*(C->data()+i+j*(C->ld())),1e-12*normInf);
         }
     }
 
