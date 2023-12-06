@@ -31,3 +31,5 @@ endforeach ()
 set_target_properties(${EXECUTABLES}
                       PROPERTIES RUNTIME_OUTPUT_DIRECTORY
                       "${ROOT_DIR}/dist/bin/")
+set_target_properties(${EXECUTABLES}
+                      PROPERTIES CUDA_SEPARABLE_COMPILATION ON)

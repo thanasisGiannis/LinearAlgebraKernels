@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(LinearAlgebraKernels)
+
+project(LinearAlgebraKernels LANGUAGES CXX CUDA)
 
 #add_definitions(-std=c++2a)
 #set(CMAKE_CXX_COMPILER "nvc++")
