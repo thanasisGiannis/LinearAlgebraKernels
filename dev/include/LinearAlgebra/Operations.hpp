@@ -38,6 +38,8 @@ using vector = thrust::device_vector<fp>;
 
 static blas::Queue blasQueue(0);
 
+
+#define fill(...) fill(thrust::device, __VA_ARGS__)
 // =============================================================================
 // Level 1 BLAS template implementations
 #define asum(...)  asum(__VA_ARGS__, LinearAlgebra::blasQueue )
