@@ -5,6 +5,8 @@ project(LinearAlgebraKernels LANGUAGES CXX CUDA)
 
 #add_definitions(-std=c++2a)
 #set(CMAKE_CXX_COMPILER "nvc++")
+find_dependency( CUDAToolkit )
+
 set(CMAKE_CXX_FLAGS "-lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl")
 set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
