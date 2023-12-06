@@ -103,7 +103,7 @@ public:
         for(INT i=0;i<this->cols;i++)
         {
             tmp[i+i*this->ld()]
-                    = std::abs(raw_data[i+i*this->ld()])
+                    = std::abs(tmp[i+i*this->ld()])
                     + static_cast<fp>(this->cols);
         }
         raw_data = tmp;
