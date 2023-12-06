@@ -21,10 +21,10 @@ enable_testing()
     target_link_libraries(
       ${test}
       GTest::gtest_main
-      Thrust::Thrust
       gmock_main
       blaspp
       lapackpp
+      Thrust
     )
   gtest_discover_tests(${test})
 endforeach ()

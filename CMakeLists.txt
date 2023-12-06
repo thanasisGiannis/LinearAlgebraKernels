@@ -24,6 +24,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(blaspp)
 FetchContent_MakeAvailable(lapackpp)
 
-find_package(Thrust)
+find_package(Thrust REQUIRED CONFIG)
+thrust_create_target(Thrust)
 
 add_subdirectory(${ROOT_DIR}/dev)
