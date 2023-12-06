@@ -53,21 +53,22 @@ chol(const int n, std::shared_ptr<LinearAlgebra::Matrix<fp>> L)
             sum = sum+ (*L)[k+j*(L->ld())]*(*L)[k+j*(L->ld())];
         }
 
-        (*L)[j+j*(L->ld())] = sqrt(B[j+j*(B.ld())]-sum);
+        *(L->data()+j+j*(L->ld()))= sqrt(*(B.data()+j+j*(B.ld()))-sum);
 
-        if(std::isnan((*L)[j+j*(L->ld())])) return false;
+        if(std::isnan(*(L->data()+j+j*(L->ld())))) return false;
 
         for(int i=j+1; i<n; i++)
         {
             sum = static_cast<fp>(0.0);
             for(int k=0; k<j; k++)
             {
-                sum = sum + (*L)[k+i*(L->ld())]*(*L)[k+j*(L->ld())];
+                sum = sum + *(L->data()+k+i*(L->ld()))*(*(L->data()+k+j*(L->ld())));
             }
 
-            (*L)[j+i*(L->ld())] = (static_cast<fp>(1.0)/(*L)[j+j*(L->ld())])*(B[j+i*(B.ld())]-sum);
+            *(L->data()+j+i*(L->ld()))
+                    = (static_cast<fp>(1.0)/(*(L->data()+j+j*(L->ld())))*(*(B.data()+j+i*(B.ld()))-sum));
 
-            if(std::isnan((*L)[j+i*(L->ld())])) return false;
+            if(std::isnan(*(L->data()+j+i*(L->ld())))) return false;
         }
     }
     return true;

@@ -46,7 +46,7 @@ QR(INT m, INT n,
     fill(Q.begin(), Q.end(), static_cast<fp>(0.0));
 
     for(INT i=0; i<m; i++){
-      Q[i+i*ldQ] = static_cast<fp>(1.0);
+      *(Q.data()+i+i*ldQ) = static_cast<fp>(1.0);
     }
 
     for(INT k=0; k<n; k++) {
@@ -61,7 +61,7 @@ QR(INT m, INT n,
 
       // v=x; v(k)=x(k)+g;
       hhv = hhx;
-      hhv[k] = hhx[k] + g;
+      *(hhv.data()+k) = *(hhx.data()+k) + g;
 
       // s=norm(v);
       fp s = LinearAlgebra::Operation::nrm2(m,hhv.data(),1);

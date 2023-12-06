@@ -42,7 +42,7 @@ QR(const INT m, const INT n,
     for(int j=0; j<n; j++)
     {
         fp r = LinearAlgebra::Operation::nrm2(m,Q->data() + 0 +j*(Q->ld()), 1);
-        (*R)[j+j*(R->ld())] = r;
+        *(R->data()+j+j*(R->ld())) = r;
         LinearAlgebra::Operation::scal(m, static_cast<fp>(1.0)/r,
                                        Q->data() + 0 + j*(Q->ld()), 1);
         for(auto k=j+1; k<n; k++)
@@ -50,7 +50,7 @@ QR(const INT m, const INT n,
             r = LinearAlgebra::Operation::dot(m,
                                               Q->data() + 0 + j*(Q->ld()), 1,
                                               Q->data() + 0 + k*(Q->ld()), 1);
-            (*R)[j+k*(R->ld())] = r;
+            *(R->data()+j+k*(R->ld())) = r;
             LinearAlgebra::Operation::axpy(m, -r,
                                            Q->data() + 0 + j*(Q->ld()), 1,
                                            Q->data() + 0 + k*(Q->ld()), 1);
