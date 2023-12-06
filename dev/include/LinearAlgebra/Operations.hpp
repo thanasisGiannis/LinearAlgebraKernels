@@ -2,6 +2,7 @@
 #define LINEARALGEBRA_OPERATIONS_HPP
 
 #include <blas.hh>
+#include <thrust/async/for_each.h>
 #include <thrust/copy.h>
 #include <thrust/fill.h>
 #include <thrust/generate.h>
