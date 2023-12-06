@@ -32,27 +32,35 @@ public:
         , cols{cols_}
     {
         raw_data.resize(rows*cols);
-        LinearAlgebra::fill(raw_data.begin(),
-                            raw_data.end(),
-                            static_cast<fp>(0.0));
+        fill(raw_data.begin(), raw_data.end(),static_cast<fp>(0.0));
     }
 
     Matrix(INT rows_, INT cols_, std::list<fp> l)
         : rows{rows_}
         , cols{cols_}
     {
+        #if defined( BLAS_HAVE_CUBLAS ) \
+            || defined( BLAS_HAVE_ROCBLAS ) \
+            || defined( BLAS_HAVE_SYCL )
+
+        host_vector<fp> tmp;
+        #else
+        vector<fp> tmp;
+        #endif
         if( static_cast<INT>(l.size()) == rows_*cols_)
         {
             for(fp item : l)
             {
-                raw_data.push_back(item);
+                tmp.push_back(item);
             }
             l.clear();
         }
-        if(raw_data.size()!=rows_*cols_)
+        if(tmp.size()!=rows_*cols_)
         {
-            raw_data.resize(rows_*cols_);
+            tmp.resize(rows_*cols_);
         }
+
+        raw_data = tmp;
     }
 
     auto size(){return static_cast<INT>(raw_data.size());}
