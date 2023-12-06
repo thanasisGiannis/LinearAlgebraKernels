@@ -36,7 +36,7 @@ public:
             || defined( BLAS_HAVE_ROCBLAS ) \
             || defined( BLAS_HAVE_SYCL )
 
-        host_vector<fp> tmp;
+        thrust::host_vector<fp> tmp;
         #else
         vector<fp> tmp;
         #endif
@@ -56,7 +56,7 @@ public:
             || defined( BLAS_HAVE_ROCBLAS ) \
             || defined( BLAS_HAVE_SYCL )
 
-        host_vector<fp> tmp;
+        thrust::host_vector<fp> tmp;
         #else
         vector<fp> tmp;
         #endif
