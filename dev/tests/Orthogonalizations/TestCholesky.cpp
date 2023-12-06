@@ -67,7 +67,9 @@ TEST(TestCholesky, QR)
     {
         for(uint j=0;j<n;j++)
         {
-            EXPECT_NEAR((*A)[i+j*(A->ld())],(*C)[i+j*(C->ld())],1e-12*normInf);
+            EXPECT_NEAR(*(A->data()+i+j*(A->ld())),
+                        *(C->data()+i+j*(C->ld())),
+                        1e-12*normInf);
         }
     }
 }
@@ -99,7 +101,7 @@ TEST(TestCholesky, qrBigMatrix)
     {
         for(uint j=0;j<n;j++)
         {
-            EXPECT_NEAR(0.0,(*C)[i+j*(C->ld())],1e-12*normInf);
+            EXPECT_NEAR(0.0,*(C->data()+i+j*(C->ld())),1e-12*normInf);
         }
     }
 
@@ -128,7 +130,9 @@ TEST(TestCholesky, qrBigMatrix)
     {
         for(uint j=0;j<n;j++)
         {
-            EXPECT_NEAR((*A)[i+j*(A->ld())],(*C)[i+j*(C->ld())],1e-12*normInf);
+            EXPECT_NEAR(*(A->data()+i+j*(A->ld())),
+                        *(C->data()+i+j*(C->ld())),
+                        1e-12*normInf);
         }
     }
 }

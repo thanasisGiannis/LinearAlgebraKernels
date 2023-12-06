@@ -65,7 +65,8 @@ TEST(TestHouseholder, QR)
     {
         for(uint j=0;j<n;j++)
         {
-            EXPECT_NEAR((*A)[i+j*(A->ld())],(*C)[i+j*(C->ld())],1e-12*normInf);
+            EXPECT_NEAR(*(A->data()+i+j*(A->ld())),
+                        *(C->data()+i+j*(C->ld())),1e-12*normInf);
         }
     }
 }
@@ -175,7 +176,9 @@ TEST(TestHouseholder, checkBigMatrixQR)
     {
         for(uint j=0;j<n;j++)
         {
-            EXPECT_NEAR((*A)[i+j*(A->ld())],(*C)[i+j*(C->ld())],1e-12*normInf);
+            EXPECT_NEAR(*(A->data()+i+j*(A->ld())),
+                        *(C->data()+i+j*(C->ld())),
+                        1e-12*normInf);
         }
     }
 
@@ -197,11 +200,11 @@ TEST(TestHouseholder, checkBigMatrixQR)
         {
             if(i==j)
             {
-                EXPECT_NEAR(1.0,(*I)[i+j*(I->ld())], 1e-12*normInf);
+                EXPECT_NEAR(1.0,*(I->data()+i+j*(I->ld())), 1e-12*normInf);
             }
             else
             {
-                EXPECT_NEAR(0.0,(*I)[i+j*(I->ld())], 1e-12*normInf);
+                EXPECT_NEAR(0.0,*(I->data()+i+j*(I->ld())), 1e-12*normInf);
             }
         }
     }
@@ -211,7 +214,7 @@ TEST(TestHouseholder, checkBigMatrixQR)
     {
         for(uint i=j+1;i<m;i++)
         {
-            EXPECT_NEAR(0.0,(*R)[i+j*(R->ld())], 1e-12*normInf);
+            EXPECT_NEAR(0.0,*(R->data()+i+j*(R->ld())), 1e-12*normInf);
         }
     }
 
