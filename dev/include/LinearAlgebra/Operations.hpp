@@ -10,7 +10,7 @@
 #include <thrust/device_vector.h>
 #endif
 
-#include <thrust/copy.h>
+//#include <thrust/copy.h>
 #include <thrust/fill.h>
 #include <thrust/generate.h>
 #include <thrust/sequence.h>
