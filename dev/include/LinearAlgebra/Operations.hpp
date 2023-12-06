@@ -7,13 +7,13 @@
 #include <thrust/generate.h>
 #include <thrust/sequence.h>
 
+#include <thrust/host_vector.h>
+
 #if defined( BLAS_HAVE_CUBLAS ) \
     || defined( BLAS_HAVE_ROCBLAS ) \
     || defined( BLAS_HAVE_SYCL )
 
 #include <thrust/device_vector.h>
-#else
-#include <thrust/host_vector.h>
 #endif
 
 
