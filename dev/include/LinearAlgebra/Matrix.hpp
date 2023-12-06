@@ -79,11 +79,22 @@ public:
     auto size(){return static_cast<INT>(raw_data.size());}
     auto begin()
     {
+#if defined( BLAS_HAVE_CUBLAS ) \
+    || defined( BLAS_HAVE_ROCBLAS ) \
+    || defined( BLAS_HAVE_SYCL )
+        return static_cast<vector<fp>::iterator>(raw_data.begin());
+#else
         return raw_data.begin();
+#endif
     }
-    auto end()
-    {
+    auto end()  {
+#if defined( BLAS_HAVE_CUBLAS ) \
+    || defined( BLAS_HAVE_ROCBLAS ) \
+    || defined( BLAS_HAVE_SYCL )
+        return static_cast<vector<fp>::iterator>(raw_data.end());
+#else
         return raw_data.end();
+#endif
     }
     INT ld(){return rows;}
     fp* data()
