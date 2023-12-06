@@ -81,12 +81,8 @@ public:
     void rand()
     {
 
-#if defined( BLAS_HAVE_CUBLAS ) \
-    || defined( BLAS_HAVE_ROCBLAS ) \
-    || defined( BLAS_HAVE_SYCL )
 
-        thrust::host_vector<fp> raw_data(rows*cols);
-#endif
+        host_vector<fp> tmp(rows*cols);
         int range = static_cast<int>(this->rows+this->cols);
         // First create an instance of an engine.
         std::random_device rnd_device;
@@ -98,7 +94,7 @@ public:
                        return static_cast<fp>(dist(mersenne_engine)/2*range);
                    };
 
-        generate(raw_data.begin(), raw_data.end(),
+        generate(tmp.begin(), tmp.end(),
                  [&range, &gen](){
                     auto r = gen()/(range*range);
                     return r;
@@ -106,17 +102,12 @@ public:
 
         for(INT i=0;i<this->cols;i++)
         {
-            raw_data[i+i*this->ld()]
+            tmp[i+i*this->ld()]
                     = std::abs(raw_data[i+i*this->ld()])
                     + static_cast<fp>(this->cols);
         }
+        raw_data = tmp;
     }
-#if defined( BLAS_HAVE_CUBLAS ) \
-    || defined( BLAS_HAVE_ROCBLAS ) \
-    || defined( BLAS_HAVE_SYCL )
-
-        this->raw_data = raw_data;
-#endif
 };
 
 } // namespace LinearAlgebra
