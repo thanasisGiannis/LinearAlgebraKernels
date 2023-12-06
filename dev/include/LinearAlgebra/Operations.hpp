@@ -14,6 +14,8 @@
 #include <thrust/copy.h>
 #include <thrust/fill.h>
 #include <thrust/generate.h>
+#include <thrust/random/linear_congruential_engine.h>
+#include <thrust/random/normal_distribution.h>
 
 namespace {
 typedef unsigned int UINT;

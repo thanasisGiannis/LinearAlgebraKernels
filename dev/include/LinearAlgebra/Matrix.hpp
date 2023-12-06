@@ -81,6 +81,12 @@ public:
     void rand()
     {
 
+#if defined( BLAS_HAVE_CUBLAS ) \
+    || defined( BLAS_HAVE_ROCBLAS ) \
+    || defined( BLAS_HAVE_SYCL )
+
+        thrust::host_vector<fp> raw_data(rows*cols);
+#endif
         int range = static_cast<int>(this->rows+this->cols);
         // First create an instance of an engine.
         std::random_device rnd_device;
@@ -98,14 +104,19 @@ public:
                     return r;
                  });
 
-        /*
         for(INT i=0;i<this->cols;i++)
         {
             raw_data[i+i*this->ld()]
                     = std::abs(raw_data[i+i*this->ld()])
                     + static_cast<fp>(this->cols);
-        }*/
+        }
     }
+#if defined( BLAS_HAVE_CUBLAS ) \
+    || defined( BLAS_HAVE_ROCBLAS ) \
+    || defined( BLAS_HAVE_SYCL )
+
+        this->raw_data = raw_data;
+#endif
 };
 
 } // namespace LinearAlgebra
