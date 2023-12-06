@@ -34,7 +34,7 @@ TEST(TestMGS, QR)
     {
         for(uint j=0;j<n;j++)
         {
-            EXPECT_DOUBLE_EQ(0.0,(*C)[i+j*(C->ld())]);
+            EXPECT_DOUBLE_EQ(0.0,C->data() + i+j*(C->ld()));
         }
     }
 

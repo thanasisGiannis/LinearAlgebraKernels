@@ -27,7 +27,7 @@ TEST(TestHouseholder, QR)
                                              4,5,6})};
 
     INT index = LinearAlgebra::Operation::iamax(m*n,A->data(),1);
-    double normInf = (*A)[index];
+    double normInf = *(A->data()+index);
 
     std::shared_ptr<LinearAlgebra::Matrix<double>>
     C{new LinearAlgebra::Matrix<double>(m,n)};

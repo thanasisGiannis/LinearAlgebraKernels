@@ -54,7 +54,15 @@ fp dot(INT n, fp const *x, INT incx, fp const *y, INT incy)
 
 #define dotu(...)  dotu(__VA_ARGS__, LinearAlgebra::blasQueue )
 //#define iamax(...) iamax(__VA_ARGS__, LinearAlgebra::blasQueue )
-#define nrm2(...)  nrm2(__VA_ARGS__, LinearAlgebra::blasQueue )
+//#define nrm2(...)  nrm2(__VA_ARGS__, LinearAlgebra::blasQueue )
+template<class fp>
+fp nrm2 (INT n, fp const *x, INT incx)
+{
+    fp result;
+    blas::nrm2(n, x, incx, &result, LinearAlgebra::blasQueue)
+    return result;
+}
+
 #define rot(...)   rot(__VA_ARGS__, LinearAlgebra::blasQueue )
 #define rotg(...)  rotg(__VA_ARGS__, LinearAlgebra::blasQueue )
 #define rotm(...)  rotm(__VA_ARGS__, LinearAlgebra::blasQueue )
