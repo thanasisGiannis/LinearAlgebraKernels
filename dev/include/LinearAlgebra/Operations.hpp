@@ -59,7 +59,7 @@ template<class fp>
 fp nrm2 (INT n, fp const *x, INT incx)
 {
     fp result;
-    blas::nrm2(n, x, incx, &result, LinearAlgebra::blasQueue)
+    blas::nrm2(n, x, incx, &result, LinearAlgebra::blasQueue);
     return result;
 }
 
