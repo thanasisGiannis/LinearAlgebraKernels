@@ -39,6 +39,11 @@ QR(const INT m, const INT n,
     }
 
     fill(R->begin(), R->end(), static_cast<fp>(0.0));
+    generate(R->begin(), R->end(),
+             [](){
+                return 0.0;
+             });
+
     for(int j=0; j<n; j++)
     {
         fp r = LinearAlgebra::Operation::nrm2(m,Q->data() + 0 +j*(Q->ld()), 1);
