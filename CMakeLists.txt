@@ -9,9 +9,6 @@ set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 list( APPEND CUDA_NVCC_FLAGS -gencode arch=compute_30,code=sm_30 -DTHRUST_DEVICE_SYSTEM=${THRUST_DEVICE_SYSTEM} )
 list(APPEND CUDA_NVCC_FLAGS -Xcompiler -fopenmp)
 
-find_package(Thrust REQUIRED CONFIG)
-thrust_create_target(Thrust)
-
 find_package(OpenMP REQUIRED)
 include(FetchContent)
 FetchContent_Declare(

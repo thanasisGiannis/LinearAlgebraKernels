@@ -24,7 +24,7 @@ enable_testing()
       gmock_main
       blaspp
       lapackpp
-      Thrust
+      cuda
     )
   gtest_discover_tests(${test})
 endforeach ()
