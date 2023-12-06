@@ -21,8 +21,8 @@ enable_testing()
     target_link_libraries(
       ${test}
       GTest::gtest_main
+      Thrust::Thrust
       gmock_main
-      cuda
       blaspp
       lapackpp
     )
