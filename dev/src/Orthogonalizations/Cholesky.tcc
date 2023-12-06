@@ -50,7 +50,7 @@ chol(const int n, std::shared_ptr<LinearAlgebra::Matrix<fp>> L)
         sum = static_cast<fp>(0.0);
         for(int k=0; k<j; k++)
         {
-            sum = sum+ (*L)[k+j*(L->ld())]*(*L)[k+j*(L->ld())];
+            sum = sum + (*(L->data()+k+j*(L->ld())))*(*(L->data()+k+j*(L->ld())));
         }
 
         *(L->data()+j+j*(L->ld()))= sqrt(*(B.data()+j+j*(B.ld()))-sum);
