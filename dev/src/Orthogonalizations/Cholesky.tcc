@@ -85,7 +85,7 @@ QR(const INT m, const INT n,
 
     // R : n x n
     // Q : m x n
-    fill(B.begin(), B.end(), static_cast<fp>(0.0));
+    LinearAlgebra::fill(B.begin(), B.end(), static_cast<fp>(0.0));
     // B = Q'*Q;
     LinearAlgebra::Operation::gemm(LinearAlgebra::Operation::Layout::ColMajor,
                                     LinearAlgebra::Operation::Op::Trans,

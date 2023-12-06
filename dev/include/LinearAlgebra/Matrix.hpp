@@ -32,7 +32,9 @@ public:
         , cols{cols_}
     {
         raw_data.resize(rows*cols);
-        std::fill(raw_data.begin(),raw_data.end(),static_cast<fp>(0.0));
+        LinearAlgebra::fill(raw_data.begin(),
+                            raw_data.end(),
+                            static_cast<fp>(0.0));
     }
 
     Matrix(INT rows_, INT cols_, std::list<fp> l)
@@ -94,7 +96,7 @@ public:
                        return static_cast<fp>(dist(mersenne_engine)/2*range);
                    };
 
-        generate(tmp.begin(), tmp.end(),
+        LinearAlgebra::generate(tmp.begin(), tmp.end(),
                  [&range, &gen](){
                     auto r = gen()/(range*range);
                     return r;

@@ -43,7 +43,7 @@ QR(INT m, INT n,
     auto ldhhvhhvt  = hhvhhvt.ld();
 
     // Q = I
-    fill(Q.begin(), Q.end(), static_cast<fp>(0.0));
+    LinearAlgebra::fill(Q.begin(), Q.end(), static_cast<fp>(0.0));
 
     for(INT i=0; i<m; i++){
       *(Q.data()+i+i*ldQ) = static_cast<fp>(1.0);
