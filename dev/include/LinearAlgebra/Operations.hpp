@@ -2,19 +2,18 @@
 #define LINEARALGEBRA_OPERATIONS_HPP
 
 #include <blas.hh>
-//#include <thrust/copy.h>
-#include <thrust/fill.h>
-#include <thrust/generate.h>
-#include <thrust/sequence.h>
-
 #include <thrust/host_vector.h>
-
 #if defined( BLAS_HAVE_CUBLAS ) \
     || defined( BLAS_HAVE_ROCBLAS ) \
     || defined( BLAS_HAVE_SYCL )
 
 #include <thrust/device_vector.h>
 #endif
+
+#include <thrust/copy.h>
+#include <thrust/fill.h>
+#include <thrust/generate.h>
+#include <thrust/sequence.h>
 
 
 namespace {
