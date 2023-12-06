@@ -76,6 +76,7 @@ public:
         cols=0;
         return raw_data.clear();
     }
+
     void rand()
     {
 
@@ -99,9 +100,8 @@ public:
         for(INT i=0;i<this->cols;i++)
         {
             *(raw_data.data()+i+i*this->ld())
-                    += //std::abs(*(raw_data.data()+i+i*this->ld()))
-                    //+
-                    static_cast<fp>(this->cols);
+                    = std::abs(*(raw_data.data()+i+i*this->ld()))
+                    + static_cast<fp>(this->cols);
         }
     }
 };

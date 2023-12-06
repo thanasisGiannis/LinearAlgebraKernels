@@ -13,6 +13,7 @@
 
 #include <thrust/copy.h>
 #include <thrust/fill.h>
+#include <thrust/generate.h>
 
 namespace {
 typedef unsigned int UINT;
