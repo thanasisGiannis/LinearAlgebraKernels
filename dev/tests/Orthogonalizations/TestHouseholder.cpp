@@ -164,7 +164,7 @@ TEST(TestHouseholder, checkBigMatrixQR)
                                    C->data(), C->ld());
 
     INT index = LinearAlgebra::Operation::iamax(m*n,A->data(),1);
-    double normInf = (*A)[index];
+    double normInf = *(A->data()+index);
 
 
     // check correctness of values

@@ -60,7 +60,7 @@ TEST(TestMGS, QR)
                                    C->data(), C->ld());
 
     INT index = LinearAlgebra::Operation::iamax(m*n,A->data(),1);
-    double normInf = (*A)[index];
+    double normInf = *(A->data()+index);
 
     for(uint i=0;i<m;i++)
     {
@@ -135,8 +135,7 @@ TEST(TestMGS, orth)
                                    static_cast<double>(0.0),
                                    C->data(), C->ld());
     INT index = LinearAlgebra::Operation::iamax(m*n,A->data(),1);
-    double normInf = (*A)[index];
-
+    double normInf = *(A->data()+index);
     for(uint i=0;i<n;i++)
     {
         for(uint j=0;j<n;j++)
@@ -212,7 +211,7 @@ TEST(TestMGS, orthAgainst)
 
 
     INT index = LinearAlgebra::Operation::iamax(m*nQ, Q->data(),1);
-    double normInf = (*Q)[index];
+    double normInf = *(Q->data()+index);
 
     for(uint i=0;i<nQ;i++)
     {

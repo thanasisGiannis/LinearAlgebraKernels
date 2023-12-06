@@ -29,7 +29,7 @@ TEST(TestCholesky, QR)
     A->rand();
 
     INT index = LinearAlgebra::Operation::iamax(m*n,A->data(),1);
-    double normInf = (*A)[index];
+    double normInf = *(A->data()+index);
 
     std::shared_ptr<LinearAlgebra::Matrix<double>>
     C{new LinearAlgebra::Matrix<double>(m,n)};
@@ -93,7 +93,7 @@ TEST(TestCholesky, qrBigMatrix)
     C{new LinearAlgebra::Matrix<double>(m,n)};
 
     INT index = LinearAlgebra::Operation::iamax(m*n,A->data(),1);
-    double normInf = (*A)[index];
+    double normInf = *(A->data()+index);
 
     for(uint i=0;i<m;i++)
     {

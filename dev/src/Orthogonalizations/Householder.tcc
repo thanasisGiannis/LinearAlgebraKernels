@@ -54,7 +54,7 @@ QR(INT m, INT n,
       fill(hhx.begin(), hhx.end(), static_cast<fp>(0.0));
 
       // x(k:m,1)=R(k:m,k);
-      LinearAlgebra::Operation::copy(m-k,R.data() +k+k*ldR),1,hhx.data()+k),1);
+      LinearAlgebra::Operation::copy(m-k,R.data() +k+k*ldR,1,hhx.data()+k,1);
 
       //g=norm(x);
       fp g = LinearAlgebra::Operation::nrm2(m, hhx.data(), 1);
