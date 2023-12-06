@@ -82,7 +82,7 @@ public:
 #if defined( BLAS_HAVE_CUBLAS ) \
     || defined( BLAS_HAVE_ROCBLAS ) \
     || defined( BLAS_HAVE_SYCL )
-        return static_cast<vector<fp>::iterator>(raw_data.begin());
+        return static_cast<typename vector<fp>::iterator>(raw_data.begin());
 #else
         return raw_data.begin();
 #endif
@@ -91,7 +91,7 @@ public:
 #if defined( BLAS_HAVE_CUBLAS ) \
     || defined( BLAS_HAVE_ROCBLAS ) \
     || defined( BLAS_HAVE_SYCL )
-        return static_cast<vector<fp>::iterator>(raw_data.end());
+        return static_cast<typename vector<fp>::iterator>(raw_data.end());
 #else
         return raw_data.end();
 #endif
