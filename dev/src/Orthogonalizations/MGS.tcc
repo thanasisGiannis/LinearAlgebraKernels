@@ -38,11 +38,7 @@ QR(const INT m, const INT n,
         return OrthogonalizationErr_t::INVALID_INPUT;
     }
 
-    //fill(R->begin(), R->end(), static_cast<fp>(0.0));
-    generate(R->begin(), R->end(),
-             [](){
-                return 0.0;
-             });
+    LinearAlgebra::fill(R->begin(), R->end(), static_cast<fp>(0.0));
 
     for(int j=0; j<n; j++)
     {
