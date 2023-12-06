@@ -88,7 +88,7 @@ public:
             || defined( BLAS_HAVE_SYCL )
             return static_cast<fp*>(raw_pointer_cast(raw_data.data()));
         #else
-            raw_data.data();
+            return raw_data.data();
         #endif
     }
     auto operator[](INT index) {return raw_data[index];}
