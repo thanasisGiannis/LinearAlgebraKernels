@@ -47,6 +47,10 @@ public:
             }
             l.clear();
         }
+        if(raw_data.size()!=rows_*cols_)
+        {
+            raw_data.resize(rows_*cols_);
+        }
     }
 
     auto size(){return static_cast<INT>(raw_data.size());}
