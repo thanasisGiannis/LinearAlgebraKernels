@@ -24,7 +24,6 @@ enable_testing()
       gmock_main
       blaspp
       lapackpp
-      cusolver
     )
   gtest_discover_tests(${test})
 endforeach ()
