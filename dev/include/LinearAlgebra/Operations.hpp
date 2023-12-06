@@ -14,7 +14,7 @@
 #include <thrust/fill.h>
 #include <thrust/generate.h>
 #include <thrust/sequence.h>
-
+#include <thrust/execution_policy.h>
 
 namespace {
 typedef unsigned int UINT;
@@ -39,7 +39,7 @@ using vector = thrust::device_vector<fp>;
 static blas::Queue blasQueue(0);
 
 
-#define fill(...) fill(thrust::device, __VA_ARGS__)
+#define fill(...) fill(device, __VA_ARGS__)
 // =============================================================================
 // Level 1 BLAS template implementations
 #define asum(...)  asum(__VA_ARGS__, LinearAlgebra::blasQueue )
