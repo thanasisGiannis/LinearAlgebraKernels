@@ -59,13 +59,7 @@ public:
     INT ld(){return rows;}
     fp* data()
     {
-        #if defined( BLAS_HAVE_CUBLAS ) \
-            || defined( BLAS_HAVE_ROCBLAS ) \
-            || defined( BLAS_HAVE_SYCL )
-            return static_cast<fp*>(raw_data.data().get());
-        #else
             raw_data.data();
-        #endif
     }
     auto operator[](INT index) {return raw_data[index];}
     auto Rows(){return rows;}
