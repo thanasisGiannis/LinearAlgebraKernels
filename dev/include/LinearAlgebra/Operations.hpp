@@ -5,6 +5,7 @@
 #include <thrust/copy.h>
 #include <thrust/fill.h>
 #include <thrust/generate.h>
+#include <thrust/sequence.h>
 
 #if defined( BLAS_HAVE_CUBLAS ) \
     || defined( BLAS_HAVE_ROCBLAS ) \
