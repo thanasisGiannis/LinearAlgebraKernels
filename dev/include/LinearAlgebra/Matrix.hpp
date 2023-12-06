@@ -1,5 +1,5 @@
-#ifndef MATRIX_HPP
-#define MATRIX_HPP
+#ifndef LINEARALGEBRA_MATRIX_HPP
+#define LINEARALGEBRA_MATRIX_HPP
 
 #include <LinearAlgebra/Operations.hpp>
 
@@ -154,4 +154,4 @@ std::ostream& operator<<(std::ostream&os , LinearAlgebra::Matrix<fp> &A)
     return os;
 }
 
-#endif // MATRIX_HPP
+#endif // LINEARALGEBRA_MATRIX_HPP

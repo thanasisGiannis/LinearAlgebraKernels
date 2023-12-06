@@ -1,5 +1,5 @@
-#ifndef OPERATIONS_HPP
-#define OPERATIONS_HPP
+#ifndef LINEARALGEBRA_OPERATIONS_HPP
+#define LINEARALGEBRA_OPERATIONS_HPP
 
 #include <blas.hh>
 #include <thrust/copy.h>
@@ -26,8 +26,6 @@ namespace LinearAlgebra {
 // in order to hide the thrust
 // and blas namespaces
 // we use LinearAlgebra namespace
-// e.g. instead of blas::gemm()
-// use LinearAlgebra::gemm()
 using namespace thrust;
 
 // defines are from device.hh of BLASPP library
@@ -110,4 +108,4 @@ namespace Operation=blas;
 #endif
 
 }
-#endif // OPERATIONS_HPP
+#endif // LINEARALGEBRA_OPERATIONS_HPP
