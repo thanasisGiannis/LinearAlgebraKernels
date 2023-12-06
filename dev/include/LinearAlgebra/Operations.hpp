@@ -2,7 +2,6 @@
 #define LINEARALGEBRA_OPERATIONS_HPP
 
 #include <blas.hh>
-#include <thrust/async/for_each.h>
 #include <thrust/copy.h>
 #include <thrust/fill.h>
 #include <thrust/generate.h>
@@ -14,7 +13,7 @@
     || defined( BLAS_HAVE_ROCBLAS ) \
     || defined( BLAS_HAVE_SYCL )
 
-#include <thrust/universal_vector.h>
+#include <thrust/device_vector.h>
 #endif
 
 
@@ -36,7 +35,7 @@ using namespace thrust;
     || defined( BLAS_HAVE_SYCL )
 
 template <class fp>
-using vector = thrust::universal_vector<fp>;
+using vector = thrust::device_vector<fp>;
 
 static blas::Queue blasQueue(0);
 
