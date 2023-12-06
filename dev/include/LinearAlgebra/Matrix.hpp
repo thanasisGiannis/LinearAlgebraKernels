@@ -31,10 +31,21 @@ public:
         : rows{rows_}
         , cols{cols_}
     {
-        raw_data.resize(rows*cols);
-        LinearAlgebra::fill(raw_data.begin(),
-                            raw_data.end(),
+
+        #if defined( BLAS_HAVE_CUBLAS ) \
+            || defined( BLAS_HAVE_ROCBLAS ) \
+            || defined( BLAS_HAVE_SYCL )
+
+        host_vector<fp> tmp;
+        #else
+        vector<fp> tmp;
+        #endif
+
+        tmp.resize(rows*cols);
+        LinearAlgebra::fill(tmp.begin(),
+                            tmp.end(),
                             static_cast<fp>(0.0));
+        raw_data = tmp;
     }
 
     Matrix(INT rows_, INT cols_, std::list<fp> l)
