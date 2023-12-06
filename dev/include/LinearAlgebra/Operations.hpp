@@ -43,7 +43,15 @@ static blas::Queue blasQueue(0);
 #define asum(...)  asum(__VA_ARGS__, LinearAlgebra::blasQueue )
 #define axpy(...)  axpy(__VA_ARGS__, LinearAlgebra::blasQueue )
 //#define copy(...)  copy(__VA_ARGS__, LinearAlgebra::blasQueue )
-#define dot(...)   dot(__VA_ARGS__, LinearAlgebra::blasQueue )
+//#define dot(...)   dot(__VA_ARGS__, LinearAlgebra::blasQueue )
+template<class fp>
+fp dot(INT n, fp const *x, INT incx, fp const *y, INT incy)
+{
+    fp result;
+    blas::dot(n, x, incx, y, incy, &result, LinearAlgebra::blasQueue);
+    return result;
+}
+
 #define dotu(...)  dotu(__VA_ARGS__, LinearAlgebra::blasQueue )
 //#define iamax(...) iamax(__VA_ARGS__, LinearAlgebra::blasQueue )
 #define nrm2(...)  nrm2(__VA_ARGS__, LinearAlgebra::blasQueue )
