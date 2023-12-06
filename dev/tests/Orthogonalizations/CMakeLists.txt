@@ -22,9 +22,9 @@ enable_testing()
       ${test}
       GTest::gtest_main
       gmock_main
+      cuda
       blaspp
       lapackpp
-      cuda
     )
   gtest_discover_tests(${test})
 endforeach ()
