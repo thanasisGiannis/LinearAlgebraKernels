@@ -98,12 +98,13 @@ public:
                     return r;
                  });
 
+        /*
         for(INT i=0;i<this->cols;i++)
         {
             raw_data[i+i*this->ld()]
                     = std::abs(raw_data[i+i*this->ld()])
                     + static_cast<fp>(this->cols);
-        }
+        }*/
     }
 };
 
