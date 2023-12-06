@@ -2,6 +2,10 @@
 #define OPERATIONS_HPP
 
 #include <blas.hh>
+#include <thrust/copy.h>
+#include <thrust/fill.h>
+#include <thrust/generate.h>
+
 #if defined( BLAS_HAVE_CUBLAS ) \
     || defined( BLAS_HAVE_ROCBLAS ) \
     || defined( BLAS_HAVE_SYCL )
@@ -11,9 +15,6 @@
 #include <thrust/host_vector.h>
 #endif
 
-#include <thrust/copy.h>
-#include <thrust/fill.h>
-#include <thrust/generate.h>
 
 namespace {
 typedef unsigned int UINT;
