@@ -14,7 +14,7 @@
     || defined( BLAS_HAVE_ROCBLAS ) \
     || defined( BLAS_HAVE_SYCL )
 
-#include <thrust/device_vector.h>
+#include <thrust/universal_vector.h>
 #endif
 
 
@@ -36,7 +36,7 @@ using namespace thrust;
     || defined( BLAS_HAVE_SYCL )
 
 template <class fp>
-using vector = thrust::device_vector<fp>;
+using vector = thrust::universal_vector<fp>;
 
 static blas::Queue blasQueue(0);
 

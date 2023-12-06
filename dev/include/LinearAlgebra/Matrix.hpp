@@ -77,7 +77,16 @@ public:
     }
 
     auto size(){return static_cast<INT>(raw_data.size());}
-    auto begin(){return raw_data.begin();}
+    auto begin()
+    {
+#if defined( BLAS_HAVE_CUBLAS ) \
+    || defined( BLAS_HAVE_ROCBLAS ) \
+    || defined( BLAS_HAVE_SYCL )
+        return static_cast<InputIterator>(raw_data.begin());
+#else
+        return raw_data.begin();
+#endif
+    }
     auto end()  {return raw_data.end();}
     INT ld(){return rows;}
     fp* data()
