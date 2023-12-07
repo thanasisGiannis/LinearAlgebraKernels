@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(tests LANGUAGES CXX)
+project(tests)
 
 include(FetchContent)
 FetchContent_Declare(
@@ -17,14 +17,13 @@ include(GoogleTest)
 enable_testing()
   set(CMAKE_CXX_FLAGS "-Wall -Wextra")
   foreach (test ${EXECUTABLES})
-    add_executable(${test} ${test}.cu)
+    add_executable(${test} ${test}.cpp)
     target_link_libraries(
       ${test}
       GTest::gtest_main
       gmock_main
       blaspp
       lapackpp
-      cusolver
     )
   gtest_discover_tests(${test})
 endforeach ()
@@ -32,5 +31,3 @@ endforeach ()
 set_target_properties(${EXECUTABLES}
                       PROPERTIES RUNTIME_OUTPUT_DIRECTORY
                       "${ROOT_DIR}/dist/bin/")
-set_target_properties(${EXECUTABLES}
-                      PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
