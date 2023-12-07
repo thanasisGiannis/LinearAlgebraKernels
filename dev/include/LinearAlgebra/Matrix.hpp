@@ -31,82 +31,42 @@ public:
         : rows{rows_}
         , cols{cols_}
     {
-
-        #if defined( BLAS_HAVE_CUBLAS ) \
-            || defined( BLAS_HAVE_ROCBLAS ) \
-            || defined( BLAS_HAVE_SYCL )
-
-        thrust::host_vector<fp> tmp;
-        #else
-        vector<fp> tmp;
-        #endif
-
-        tmp.resize(rows*cols);
-        LinearAlgebra::fill(tmp.begin(),
-                            tmp.end(),
+        raw_data.resize(rows*cols);
+        LinearAlgebra::fill(raw_data.begin(),
+                            raw_data.end(),
                             static_cast<fp>(0.0));
-        raw_data = tmp;
     }
 
     Matrix(INT rows_, INT cols_, std::list<fp> l)
         : rows{rows_}
         , cols{cols_}
     {
-        #if defined( BLAS_HAVE_CUBLAS ) \
-            || defined( BLAS_HAVE_ROCBLAS ) \
-            || defined( BLAS_HAVE_SYCL )
-
-        thrust::host_vector<fp> tmp;
-        #else
-        vector<fp> tmp;
-        #endif
         if( static_cast<INT>(l.size()) == rows_*cols_)
         {
             for(fp item : l)
             {
-                tmp.push_back(item);
+                raw_data.push_back(item);
             }
             l.clear();
         }
-        if(tmp.size()!=rows_*cols_)
+        if(raw_data.size()!=rows_*cols_)
         {
-            tmp.resize(rows_*cols_);
+            raw_data.resize(rows_*cols_);
         }
-
-        raw_data = tmp;
     }
 
     auto size(){return static_cast<INT>(raw_data.size());}
     auto begin()
     {
-#if defined( BLAS_HAVE_CUBLAS ) \
-    || defined( BLAS_HAVE_ROCBLAS ) \
-    || defined( BLAS_HAVE_SYCL )
-        return static_cast<typename vector<fp>::iterator>(raw_data.begin());
-#else
         return raw_data.begin();
-#endif
     }
     auto end()  {
-#if defined( BLAS_HAVE_CUBLAS ) \
-    || defined( BLAS_HAVE_ROCBLAS ) \
-    || defined( BLAS_HAVE_SYCL )
-        return static_cast<typename vector<fp>::iterator>(raw_data.end());
-#else
         return raw_data.end();
-#endif
     }
     INT ld(){return rows;}
     fp* data()
     {
-
-        #if defined( BLAS_HAVE_CUBLAS ) \
-            || defined( BLAS_HAVE_ROCBLAS ) \
-            || defined( BLAS_HAVE_SYCL )
-            return static_cast<fp*>(raw_pointer_cast(raw_data.data()));
-        #else
             return raw_data.data();
-        #endif
     }
     auto operator[](INT index) {return raw_data[index];}
     auto Rows(){return rows;}

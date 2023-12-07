@@ -3,12 +3,6 @@
 
 #include <blas.hh>
 #include <thrust/host_vector.h>
-#if defined( BLAS_HAVE_CUBLAS ) \
-    || defined( BLAS_HAVE_ROCBLAS ) \
-    || defined( BLAS_HAVE_SYCL )
-
-#include <thrust/device_vector.h>
-#endif
 
 #include <thrust/copy.h>
 #include <thrust/fill.h>
@@ -27,8 +21,9 @@ namespace LinearAlgebra {
 // we use LinearAlgebra namespace
 using namespace thrust;
 
+#if 0
 // defines are from device.hh of BLASPP library
-#if defined( BLAS_HAVE_CUBLAS ) \
+//#if defined( BLAS_HAVE_CUBLAS ) \
     || defined( BLAS_HAVE_ROCBLAS ) \
     || defined( BLAS_HAVE_SYCL )
 
@@ -100,12 +95,13 @@ fp nrm2 (INT n, fp const *x, INT incx)
 
 namespace Operation=blas;
 
-#else
+//#else
+#endif
 // ToDo: choose between host and device vectors
 template <class fp>
 using vector = thrust::host_vector<fp>;
 namespace Operation=blas;
-#endif
+//#endif
 
 }
 #endif // LINEARALGEBRA_OPERATIONS_HPP

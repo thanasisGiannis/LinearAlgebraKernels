@@ -2,13 +2,6 @@ cmake_minimum_required(VERSION 3.5)
 
 project(tests)
 
-include(FetchContent)
-FetchContent_Declare(
-  googletest
-  URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
-)
-FetchContent_MakeAvailable(googletest)
-
 set(EXECUTABLES TestHouseholder
                 TestCholesky
                 TestMGS) # update with new tests here
@@ -30,4 +23,4 @@ endforeach ()
 
 set_target_properties(${EXECUTABLES}
                       PROPERTIES RUNTIME_OUTPUT_DIRECTORY
-                      "${ROOT_DIR}/dist/bin/")
+                      "${ROOT_DIR}/dist/bin/Orthogonalizations")
