@@ -8,7 +8,6 @@ set(EXECUTABLES TestHouseholder
 
 include(GoogleTest)
 enable_testing()
-  set(CMAKE_CXX_FLAGS "-Wall -Wextra")
   foreach (test ${EXECUTABLES})
     add_executable(${test} ${test}.cpp)
     target_link_libraries(

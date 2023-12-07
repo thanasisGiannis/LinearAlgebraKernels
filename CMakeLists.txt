@@ -3,11 +3,16 @@ cmake_minimum_required(VERSION 3.5)
 
 project(LinearAlgebraKernels)
 
-set(CMAKE_CXX_FLAGS "-lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl")
 set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
-
-find_package(OpenMP REQUIRED)
 include(FetchContent)
+
+# check if blasspp is going to use cuda
+if(NOT gpu_acceleration)
+  include(cmake/CMakelists.NoGpuAcceleration.txt.in)
+else()
+  include(cmake/CMakelists.GpuAcceleration.txt.in)
+endif()
+
 FetchContent_Declare(
   blaspp
   URL https://github.com/icl-utk-edu/blaspp/archive/refs/heads/master.zip
@@ -18,5 +23,7 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(blaspp)
 FetchContent_MakeAvailable(lapackpp)
+
+
 
 add_subdirectory(${ROOT_DIR}/dev)

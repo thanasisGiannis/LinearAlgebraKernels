@@ -1,0 +1,2 @@
+set(gpu_backend "cuda")
+message("Using CUDA")

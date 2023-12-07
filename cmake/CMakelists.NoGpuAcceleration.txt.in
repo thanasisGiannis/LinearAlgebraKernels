@@ -1,0 +1,13 @@
+message("mkl based compilation")
+
+find_package(OpenMP REQUIRED)
+
+set(blas "mkl")
+set(blas_int "int64")
+set(blas_threaded "no")
+set(gpu_backend "none")
+
+set(CMAKE_CXX_FLAGS "-lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl")
+
+
+
