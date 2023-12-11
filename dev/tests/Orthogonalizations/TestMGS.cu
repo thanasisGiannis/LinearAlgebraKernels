@@ -59,8 +59,8 @@ TEST(TestMGS, QR)
                                    static_cast<double>(0.0),
                                    C->data(), C->ld());
 
-    INT index = LinearAlgebra::Operation::iamax(m*n,A->data(),1);
-    double normInf = *(A->data()+index);
+    auto iter = LinearAlgebra::max_element(A->begin(), A->end());
+    double normInf = *(iter);
 
     for(uint i=0;i<m;i++)
     {
@@ -135,8 +135,10 @@ TEST(TestMGS, orth)
                                    Q->data(), Q->ld(),
                                    static_cast<double>(0.0),
                                    C->data(), C->ld());
-    INT index = LinearAlgebra::Operation::iamax(m*n,A->data(),1);
-    double normInf = *(A->data()+index);
+
+    auto iter = LinearAlgebra::max_element(A->begin(), A->end());
+    double normInf = *(iter);
+
     for(uint i=0;i<n;i++)
     {
         for(uint j=0;j<n;j++)
@@ -211,19 +213,15 @@ TEST(TestMGS, orthAgainst)
               , mgsOrth.orthAgainst(m,nQ,Q,nW,w));
 
 
-    INT index = LinearAlgebra::Operation::iamax(m*nQ, Q->data(),1);
-    double normInf = *(Q->data()+index);
+    auto iter = LinearAlgebra::max_element(A->begin(), A->end());
+    double normInf = *(iter);
 
     for(uint i=0;i<nQ;i++)
     {
         for(uint j=0;j<nW;j++)
         {
-            auto dist = LinearAlgebra::Operation::dot(m,
-                                                      w->data()+0+j*(w->ld()),
-                                                      1,
-                                                      Q->data()+0+i*(Q->ld()),
-                                                      1);
-        EXPECT_NEAR(0.0, dist ,1e-12*normInf);
+            auto dist = LinearAlgebra::Operation::dot(m, w->data()+0+j*(w->ld()), (INT)1, Q->data()+0+i*(Q->ld()), (INT)1);
+            EXPECT_NEAR(0.0, dist ,1e-12*normInf);
         }
     }
 

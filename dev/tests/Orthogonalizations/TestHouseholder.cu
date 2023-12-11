@@ -26,8 +26,8 @@ TEST(TestHouseholder, QR)
     A{new LinearAlgebra::Matrix<double>(m,n,{2,2,2,
                                              4,5,6})};
 
-    INT index = LinearAlgebra::Operation::iamax(m*n,A->data(),1);
-    double normInf = *(A->data()+index);
+    auto iter = LinearAlgebra::max_element(A->begin(), A->end());
+    double normInf = *(iter);
 
     std::shared_ptr<LinearAlgebra::Matrix<double>>
     C{new LinearAlgebra::Matrix<double>(m,n)};
@@ -164,8 +164,8 @@ TEST(TestHouseholder, checkBigMatrixQR)
                                    static_cast<double>(0.0),
                                    C->data(), C->ld());
 
-    INT index = LinearAlgebra::Operation::iamax(m*n,A->data(),1);
-    double normInf = *(A->data()+index);
+    auto iter = LinearAlgebra::max_element(A->begin(), A->end());
+    double normInf = *(iter);
 
 
     // check correctness of values

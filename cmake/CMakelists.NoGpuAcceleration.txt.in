@@ -7,7 +7,9 @@ set(blas_int "int64")
 set(blas_threaded "no")
 set(gpu_backend "none")
 
+#set(CMAKE_CXX_COMPILER "/usr/bin/g++")
 set(CMAKE_CXX_FLAGS "-lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl")
+
 
 
 

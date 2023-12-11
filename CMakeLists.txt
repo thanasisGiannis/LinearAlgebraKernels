@@ -24,6 +24,4 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(blaspp)
 FetchContent_MakeAvailable(lapackpp)
 
-
-
 add_subdirectory(${ROOT_DIR}/dev)

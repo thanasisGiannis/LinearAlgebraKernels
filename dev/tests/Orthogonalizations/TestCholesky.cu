@@ -28,8 +28,8 @@ TEST(TestCholesky, QR)
 
     A->rand();
 
-    INT index = LinearAlgebra::Operation::iamax(m*n,A->data(),1);
-    double normInf = *(A->data()+index);
+    auto iter = LinearAlgebra::max_element(A->begin(), A->end());
+    double normInf = *(iter);
 
     std::shared_ptr<LinearAlgebra::Matrix<double>>
     C{new LinearAlgebra::Matrix<double>(m,n)};
@@ -38,7 +38,7 @@ TEST(TestCholesky, QR)
     {
         for(uint j=0;j<n;j++)
         {
-            EXPECT_NEAR(0.0,*(C->data()+i+j*(C->ld())),1e-12*normInf);
+            EXPECT_NEAR(0.0,(*C)[i+j*(C->ld())],1e-12*normInf);
         }
     }
 
@@ -67,8 +67,8 @@ TEST(TestCholesky, QR)
     {
         for(uint j=0;j<n;j++)
         {
-            EXPECT_NEAR(*(A->data()+i+j*(A->ld())),
-                        *(C->data()+i+j*(C->ld())),
+            EXPECT_NEAR((*A)[i+j*(A->ld())],
+                        (*C)[i+j*(C->ld())],
                         1e-12*normInf);
         }
     }
@@ -94,14 +94,14 @@ TEST(TestCholesky, qrBigMatrix)
     std::shared_ptr<LinearAlgebra::Matrix<double>>
     C{new LinearAlgebra::Matrix<double>(m,n)};
 
-    INT index = LinearAlgebra::Operation::iamax(m*n,A->data(),1);
-    double normInf = *(A->data()+index);
+    auto iter = LinearAlgebra::max_element(A->begin(), A->end());
+    double normInf = *(iter);
 
     for(uint i=0;i<m;i++)
     {
         for(uint j=0;j<n;j++)
         {
-            EXPECT_NEAR(0.0,*(C->data()+i+j*(C->ld())),1e-12*normInf);
+            EXPECT_NEAR(0.0,(*C)[i+j*(C->ld())],1e-12*normInf);
         }
     }
 
@@ -130,8 +130,8 @@ TEST(TestCholesky, qrBigMatrix)
     {
         for(uint j=0;j<n;j++)
         {
-            EXPECT_NEAR(*(A->data()+i+j*(A->ld())),
-                        *(C->data()+i+j*(C->ld())),
+            EXPECT_NEAR((*A)[i+j*(A->ld())],
+                        (*C)[i+j*(C->ld())],
                         1e-12*normInf);
         }
     }

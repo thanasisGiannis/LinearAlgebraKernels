@@ -64,9 +64,9 @@ public:
         return raw_data.end();
     }
     INT ld(){return rows;}
-    fp* data()
+    auto data()
     {
-            return raw_data.data();
+        return raw_data.data();
     }
     auto operator[](INT index) {return raw_data[index];}
     auto Rows(){return rows;}
