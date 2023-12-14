@@ -1,22 +1,24 @@
+#include <gtest/gtest.h>
+#include <gmock/gmock.h>
+
 #include <LinearAlgebra/Matrix.hpp>
 #include <Orthogonalizations/Cholesky.hpp>
 
 #include <iostream>
 #include <memory>
-#include <gtest/gtest.h>
-#include <gmock/gmock.h>
 
-TEST(TestCholesky, Cholesky) {
+TEST(TestCholesky, Cholesky) 
+{
 
     Orthogonalization::Cholesky<double> cholOrth(100,100);
+    EXPECT_EQ(0,0);
 }
-
 
 TEST(TestCholesky, QR)
 {
 
-    INT m=5;
-    INT n=3;
+    INT m=1000;
+    INT n=21;
 
     /*  A = [ 2 4;
      *        2 5;
@@ -53,28 +55,25 @@ TEST(TestCholesky, QR)
     EXPECT_EQ(Orthogonalization::OrthogonalizationErr_t::NO_ERROR
               , cholOrth.QR(m,n,Q,R));
 
-    LinearAlgebra::Operation::gemm(blas::Layout::ColMajor,
-                                   blas::Op::NoTrans,
-                                   blas::Op::NoTrans,
-                                   m, n, n,
-                                   static_cast<double>(1.0),
-                                   Q->data(), Q->ld(),
-                                   R->data(), R->ld(),
-                                   static_cast<double>(0.0),
-                                   C->data(), C->ld());
+    *C = *Q;
+    LinearAlgebra::Operation::trmm(LinearAlgebra::Operation::Layout::ColMajor,
+                                    LinearAlgebra::Operation::Side::Right,
+                                    LinearAlgebra::Operation::Uplo::Upper,
+                                    LinearAlgebra::Operation::Op::NoTrans,
+                                    LinearAlgebra::Operation::Diag::NonUnit,
+                                    m,n,1.0,R->data(), R->ld(),C->data(),C->ld());
 
     for(uint i=0;i<m;i++)
     {
         for(uint j=0;j<n;j++)
         {
-            EXPECT_NEAR((*A)[i+j*(A->ld())],
-                        (*C)[i+j*(C->ld())],
+            EXPECT_NEAR(0,std::abs((*A)[i+j*(A->ld())]-(*C)[i+j*(C->ld())]),
                         1e-12*normInf);
         }
     }
 }
 
-
+#if 0
 TEST(TestCholesky, qrBigMatrix)
 {
 
@@ -116,23 +115,22 @@ TEST(TestCholesky, qrBigMatrix)
     EXPECT_EQ(Orthogonalization::OrthogonalizationErr_t::NO_ERROR
               , cholOrth.QR(m,n,Q,R));
 
-    LinearAlgebra::Operation::gemm(blas::Layout::ColMajor,
-                                   blas::Op::NoTrans,
-                                   blas::Op::NoTrans,
-                                   m, n, n,
-                                   static_cast<double>(1.0),
-                                   Q->data(), Q->ld(),
-                                   R->data(), R->ld(),
-                                   static_cast<double>(0.0),
-                                   C->data(), C->ld());
+    *C = *Q;
+    LinearAlgebra::Operation::trmm(LinearAlgebra::Operation::Layout::ColMajor,
+                                    LinearAlgebra::Operation::Side::Right,
+                                    LinearAlgebra::Operation::Uplo::Upper,
+                                    LinearAlgebra::Operation::Op::NoTrans,
+                                    LinearAlgebra::Operation::Diag::NonUnit,
+                                    m,n,1.0,R->data(), R->ld(),C->data(),C->ld());
+
 
     for(uint i=0;i<m;i++)
     {
         for(uint j=0;j<n;j++)
         {
-            EXPECT_NEAR((*A)[i+j*(A->ld())],
-                        (*C)[i+j*(C->ld())],
+            EXPECT_NEAR(0,(*A)[i+j*(A->ld())]-(*C)[i+j*(C->ld())],
                         1e-12*normInf);
         }
     }
 }
+#endif

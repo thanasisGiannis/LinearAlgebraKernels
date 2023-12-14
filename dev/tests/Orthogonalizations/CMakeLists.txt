@@ -1,10 +1,11 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(tests LANGUAGES CXX CUDA)
+project(tests LANGUAGES C CXX CUDA)
 
 set(EXECUTABLES TestHouseholder
                 TestCholesky
                 TestMGS) # update with new tests here
+
 
 include(GoogleTest)
 enable_testing()
@@ -16,7 +17,6 @@ enable_testing()
       gmock_main
       blaspp
       lapackpp
-      cusolver
     )
   gtest_discover_tests(${test})
 endforeach ()

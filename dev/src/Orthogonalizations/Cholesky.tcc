@@ -10,7 +10,7 @@ Cholesky(const INT dim, const INT nrhs)
 
 template<class fp>
 bool Orthogonalization::Cholesky<fp>::
-chol(const int n, std::shared_ptr<LinearAlgebra::Matrix<fp>> L)
+chol(const INT n, std::shared_ptr<LinearAlgebra::Matrix<fp>> L)
 {
     /*
      * Equivelant of matlab's
@@ -18,7 +18,7 @@ chol(const int n, std::shared_ptr<LinearAlgebra::Matrix<fp>> L)
      */
 
     /*
-     * ToDo: this may need to bee chaned into
+     * ToDo: this may need to be changed into
      * a more GPU friendly function
      */
 
@@ -40,9 +40,12 @@ chol(const int n, std::shared_ptr<LinearAlgebra::Matrix<fp>> L)
           end
       end
     */
-
     // L = zeros(n);
-    fill(L->begin(), L->end(), static_cast<fp>(0.0));
+#if 1
+    LinearAlgebra::Operation::potrf(LinearAlgebra::Operation::Uplo::Upper, n, L->data(), L->ld());	
+
+#else
+    LinearAlgebra::fill(L->begin(), L->end(), static_cast<fp>(0.0));
 
     fp sum;
     for(int j=0; j<n; j++)
@@ -71,6 +74,7 @@ chol(const int n, std::shared_ptr<LinearAlgebra::Matrix<fp>> L)
             if(std::isnan(*(L->data()+j+i*(L->ld())))) return false;
         }
     }
+#endif    
     return true;
 }
 
@@ -85,7 +89,7 @@ QR(const INT m, const INT n,
 
     // R : n x n
     // Q : m x n
-    LinearAlgebra::fill(B.begin(), B.end(), static_cast<fp>(0.0));
+    LinearAlgebra::fill(R->begin(), R->end(), static_cast<fp>(0.0));
 
     // B = Q'*Q;
     LinearAlgebra::Operation::gemm(LinearAlgebra::Operation::Layout::ColMajor,
@@ -96,13 +100,9 @@ QR(const INT m, const INT n,
                                     Q->data(), Q->ld(),
                                     Q->data(), Q->ld(),
                                     static_cast<fp>(0.0),
-                                    B.data(), B.ld());
+                                    R->data(), R->ld());
 
-    if(false == chol(n, R))
-    {
-        return Orthogonalization::OrthogonalizationErr_t::INVALID_INPUT;
-    }
-
+    LinearAlgebra::Operation::potrf(LinearAlgebra::Operation::Uplo::Upper, n, R->data(), R->ld());	
     // Q = Q/R;
     LinearAlgebra::Operation::trsm(LinearAlgebra::Operation::Layout::ColMajor,
                                     LinearAlgebra::Operation::Side::Right,

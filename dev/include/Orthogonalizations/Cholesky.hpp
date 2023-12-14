@@ -5,6 +5,7 @@
 #include <Orthogonalizations/OrthogonalizationCommon.hpp>
 #include <iostream>
 
+
 namespace Orthogonalization {
 
 
@@ -20,7 +21,7 @@ private:
                                 // to create upper triangular
                                 // cholesky matrix
 
-    bool chol(const int n, std::shared_ptr<LinearAlgebra::Matrix<fp>> L);
+    bool chol(const INT n, std::shared_ptr<LinearAlgebra::Matrix<fp>> L);
 
 public:
     Cholesky(const INT dim, const INT nrhs);

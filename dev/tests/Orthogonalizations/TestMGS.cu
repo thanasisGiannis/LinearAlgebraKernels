@@ -1,10 +1,11 @@
+#include <gtest/gtest.h>
+#include <gmock/gmock.h>
+
 #include <LinearAlgebra/Matrix.hpp>
 #include <Orthogonalizations/MGS.hpp>
 
 #include <iostream>
 #include <memory>
-#include <gtest/gtest.h>
-#include <gmock/gmock.h>
 
 TEST(TestMGS, MGS) {
 

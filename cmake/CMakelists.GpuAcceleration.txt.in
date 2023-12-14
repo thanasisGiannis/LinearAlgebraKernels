@@ -1,17 +1,21 @@
 message("Using CUDA")
 
+find_package(CUDAToolkit 10.0 REQUIRED)
 
-find_package(CUDAToolkit REQUIRED)
+include_directories(${ROOT_DIR} include ${CUDAToolkit_INCLUDE_DIRS})
+
+find_package(CUDALibs)
+
 find_package(OpenMP REQUIRED)
-find_package(CUDA REQUIRED)
-
+set(CMAKE_CUDA_ARCHITECTURES 70)
 set(gpu_backend "cuda")
+
+set(CUDA_64_BIT_DEVICE_CODE on)
 
 ADD_DEFINITIONS( -DDEVICE="true")
 
-list(APPEND CUDA_NVCC_FLAGS -gencode arch=compute_30,code=sm_30 -DTHRUST_DEVICE_SYSTEM=${THRUST_DEVICE_SYSTEM} )
+list(APPEND CUDA_NVCC_FLAGS -gG -gencode arch=compute_70,code=sm_70 -DTHRUST_DEVICE_SYSTEM=${THRUST_DEVICE_SYSTEM} )
 list(APPEND CUDA_NVCC_FLAGS -Xcompiler -fopenmp)
-#CUDA::cusolver
 
 
 
