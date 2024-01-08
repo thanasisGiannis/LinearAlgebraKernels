@@ -10,7 +10,14 @@ Householder(INT dim, INT nrhs)
     , hhv{LinearAlgebra::Matrix<fp>(dim,1)}
     , hhu{LinearAlgebra::Matrix<fp>(nrhs,1)}
     , hhvhhvt{LinearAlgebra::Matrix<fp>(dim,dim)}
+    , eye{LinearAlgebra::Matrix<fp>(dim,dim)}
 {
+    LinearAlgebra::fill(eye.begin(), eye.end(), static_cast<fp>(0.0));
+    for(INT i=0; i<dim; i++)
+    {
+      *(eye.data()+i+i*(eye.ld())) = static_cast<fp>(1.0);
+    }
+
 }
 
 template<class fp>
@@ -43,13 +50,10 @@ QR(INT m, INT n,
     auto ldhhvhhvt  = hhvhhvt.ld();
 
     // Q = I
-    LinearAlgebra::fill(Q.begin(), Q.end(), static_cast<fp>(0.0));
-
-    for(INT i=0; i<m; i++){
-      *(Q.data()+i+i*ldQ) = static_cast<fp>(1.0);
-    }
-
-    for(INT k=0; k<n; k++) {
+    Q = eye;
+   
+    for(INT k=0; k<n; k++) 
+    {
       // x = zeros(m,1);
       fill(hhx.begin(), hhx.end(), static_cast<fp>(0.0));
 

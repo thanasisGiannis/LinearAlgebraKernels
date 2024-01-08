@@ -11,17 +11,10 @@ namespace Orthogonalization {
 
 template<class fp>
 class Cholesky {
-    friend class TestCholesky;
 
 private:
     INT rowMaxDim;
     INT colMaxDim;
-
-    LinearAlgebra::Matrix<fp> B;// this vector will be used
-                                // to create upper triangular
-                                // cholesky matrix
-
-    bool chol(const INT n, std::shared_ptr<LinearAlgebra::Matrix<fp>> L);
 
 public:
     Cholesky(const INT dim, const INT nrhs);

@@ -3,79 +3,8 @@ Orthogonalization::Cholesky<fp>::
 Cholesky(const INT dim, const INT nrhs)
     : rowMaxDim{dim}
     , colMaxDim{nrhs}
-    , B{LinearAlgebra::Matrix<fp>(nrhs,nrhs)}
 {
 
-}
-
-template<class fp>
-bool Orthogonalization::Cholesky<fp>::
-chol(const INT n, std::shared_ptr<LinearAlgebra::Matrix<fp>> L)
-{
-    /*
-     * Equivelant of matlab's
-     * L = chol(B);
-     */
-
-    /*
-     * ToDo: this may need to be changed into
-     * a more GPU friendly function
-     */
-
-    /*
-      [n,~] = size(A);
-      for j=1:n
-          sum = 0;
-          for k=1:j
-              sum = sum + L(k,j)*L(k,j);
-          end
-          L(j,j) = sqrt(A(j,j)-sum);
-
-          for i=j+1:n
-              sum = 0;
-              for k=1:j
-                 sum = sum + L(k,i)*L(k,j);
-              end
-              L(j,i) = (1/L(j,j))*(A(j,i)-sum);
-          end
-      end
-    */
-    // L = zeros(n);
-#if 1
-    LinearAlgebra::Operation::potrf(LinearAlgebra::Operation::Uplo::Upper, n, L->data(), L->ld());	
-
-#else
-    LinearAlgebra::fill(L->begin(), L->end(), static_cast<fp>(0.0));
-
-    fp sum;
-    for(int j=0; j<n; j++)
-    {
-        sum = static_cast<fp>(0.0);
-        for(int k=0; k<j; k++)
-        {
-            sum = sum + (*(L->data()+k+j*(L->ld())))*(*(L->data()+k+j*(L->ld())));
-        }
-
-        *(L->data()+j+j*(L->ld()))= sqrt(*(B.data()+j+j*(B.ld()))-sum);
-
-        if(std::isnan(*(L->data()+j+j*(L->ld())))) return false;
-
-        for(int i=j+1; i<n; i++)
-        {
-            sum = static_cast<fp>(0.0);
-            for(int k=0; k<j; k++)
-            {
-                sum = sum + *(L->data()+k+i*(L->ld()))*(*(L->data()+k+j*(L->ld())));
-            }
-
-            *(L->data()+j+i*(L->ld()))
-                    = (static_cast<fp>(1.0)/(*(L->data()+j+j*(L->ld())))*(*(B.data()+j+i*(B.ld()))-sum));
-
-            if(std::isnan(*(L->data()+j+i*(L->ld())))) return false;
-        }
-    }
-#endif    
-    return true;
 }
 
 template<class fp>
@@ -87,11 +16,25 @@ QR(const INT m, const INT n,
 {
 
 
-    // R : n x n
-    // Q : m x n
-    LinearAlgebra::fill(R->begin(), R->end(), static_cast<fp>(0.0));
+    if( m<n               ||
+        m > rowMaxDim     ||
+        n > colMaxDim     ||
+        NULL == Q         ||
+        NULL == R         ||
+        0 >  Q->size()    ||
+        0 >  R->size()    ||
+        m*n <  Q->size()  ||
+        n*n <  R->size()  ||
+         0  == Q->size()  ||
+         0  == R->size()  )
+    {
+        return OrthogonalizationErr_t::INVALID_INPUT;
+    }
 
-    // B = Q'*Q;
+    // R : n x n // upper triangular
+    // Q : m x n
+
+    // R = Q'*Q;
     LinearAlgebra::Operation::gemm(LinearAlgebra::Operation::Layout::ColMajor,
                                     LinearAlgebra::Operation::Op::Trans,
                                     LinearAlgebra::Operation::Op::NoTrans,
@@ -102,7 +45,9 @@ QR(const INT m, const INT n,
                                     static_cast<fp>(0.0),
                                     R->data(), R->ld());
 
+    // R = chol(R) = chol(Q'*Q)
     LinearAlgebra::Operation::potrf(LinearAlgebra::Operation::Uplo::Upper, n, R->data(), R->ld());	
+
     // Q = Q/R;
     LinearAlgebra::Operation::trsm(LinearAlgebra::Operation::Layout::ColMajor,
                                     LinearAlgebra::Operation::Side::Right,

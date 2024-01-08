@@ -1,7 +1,17 @@
 
 template<class fp>
-Orthogonalization::MGS<fp>::MGS()
-{}
+Orthogonalization::MGS<fp>::MGS(INT m, INT n)
+    : rowMaxDim{m}
+    , colMaxDim{n}
+{
+    /*
+    size_t d_size, h_size;
+    lapack::geqrf_work_size_bytes( m, n, dA_tst, lda, &d_size, &h_size, queue );
+    char* d_work = blas::device_malloc< char >( d_size, queue );
+    std::vector<char> h_work_vector( h_size );
+    char* h_work = h_work_vector.data();
+    */
+}
 
 template<class fp>
 Orthogonalization::OrthogonalizationErr_t
@@ -39,7 +49,6 @@ QR(const INT m, const INT n,
     }
 
     LinearAlgebra::fill(R->begin(), R->end(), static_cast<fp>(0.0));
-
     for(int j=0; j<n; j++)
     {
         fp r = LinearAlgebra::Operation::nrm2(m,Q->data() + 0 +j*(Q->ld()), 1);
@@ -83,9 +92,8 @@ orth(const INT m, const INT n,std::shared_ptr<LinearAlgebra::Matrix<fp>> Q)
 
     if( m<n               ||
         NULL == Q         ||
-        0 >  Q->size()    ||
-        m*m <  Q->size()  ||
-         0  == Q->size()  )
+        0 >=  Q->size()   ||
+        m*m <  Q->size()  )
     {
         return OrthogonalizationErr_t::INVALID_INPUT;
     }

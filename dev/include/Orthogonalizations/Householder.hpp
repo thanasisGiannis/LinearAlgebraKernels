@@ -23,7 +23,7 @@ private:
     LinearAlgebra::Matrix<fp> hhv;      // dim x 1
     LinearAlgebra::Matrix<fp> hhu;      // nrhs x 1
     LinearAlgebra::Matrix<fp> hhvhhvt;  // dim x dim
-
+    LinearAlgebra::Matrix<fp> eye;      // dim x dim
 };
 } // namespace Orthogonalization
 #include <Orthogonalizations/Householder.tcc>

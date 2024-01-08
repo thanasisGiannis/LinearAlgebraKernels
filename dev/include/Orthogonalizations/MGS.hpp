@@ -8,9 +8,12 @@ namespace Orthogonalization {
 
 template<class fp>
 class MGS {
+private:
+    INT rowMaxDim;
+    INT colMaxDim;
 
 public:
-    MGS();
+    MGS(INT m, INT n);
 
     OrthogonalizationErr_t
     QR(const INT m, const INT n,

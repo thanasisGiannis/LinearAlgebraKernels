@@ -72,7 +72,6 @@ TEST(TestHouseholder, QR)
     }
 }
 
-#if 0
 TEST(TestHouseholder, checkInputQR)
 {
 
@@ -148,7 +147,7 @@ TEST(TestHouseholder, checkBigMatrixQR)
     C{new LinearAlgebra::Matrix<double>(m,n)};
 
     std::shared_ptr<LinearAlgebra::Matrix<double>>
-    I{new LinearAlgebra::Matrix<double>(m,m)};
+    eye{new LinearAlgebra::Matrix<double>(m,m)};
 
     *R = *A;
     Orthogonalization::Householder<double> hs(m,n);
@@ -192,7 +191,7 @@ TEST(TestHouseholder, checkBigMatrixQR)
                                    Q->data(), Q->ld(),
                                    Q->data(), Q->ld(),
                                    static_cast<double>(0.0),
-                                   I->data(), I->ld());
+                                   eye->data(), eye->ld());
 
 
     // check if I-Q'*Q < 1e-12*norm(A,'inf');
@@ -202,11 +201,11 @@ TEST(TestHouseholder, checkBigMatrixQR)
         {
             if(i==j)
             {
-                EXPECT_NEAR(1.0,*(I->data()+i+j*(I->ld())), 1e-12*normInf);
+                EXPECT_NEAR(1.0,*(eye->data()+i+j*(eye->ld())), 1e-12*normInf);
             }
             else
             {
-                EXPECT_NEAR(0.0,*(I->data()+i+j*(I->ld())), 1e-12*normInf);
+                EXPECT_NEAR(0.0,*(eye->data()+i+j*(eye->ld())), 1e-12*normInf);
             }
         }
     }
@@ -221,5 +220,3 @@ TEST(TestHouseholder, checkBigMatrixQR)
     }
 
 }
-
-#endif

@@ -134,8 +134,6 @@ namespace Operation {
    // =============================================================================
    // LAPACK template implementations
    #define potrf(...)  potrf(FOR_EACH(GET,__VA_ARGS__) , LinearAlgebra::d_info, LinearAlgebra::lapackQueue)
-
-
 } // namespace Operation
 
 }

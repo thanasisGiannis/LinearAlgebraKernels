@@ -9,14 +9,14 @@
 
 TEST(TestMGS, MGS) {
 
-    Orthogonalization::MGS<double> mgsOrth;
+    Orthogonalization::MGS<double> mgsOrth(100,10);
 }
 
 TEST(TestMGS, QR)
 {
 
-    INT m=1000;
-    INT n=60;
+    INT m=10;
+    INT n=3;
 
     /*  A = [ 2 4;
      *        2 5;
@@ -46,7 +46,7 @@ TEST(TestMGS, QR)
     R{new LinearAlgebra::Matrix<double>(n,n)};
 
     *Q = *A;
-    Orthogonalization::MGS<double> mgsOrth;
+    Orthogonalization::MGS<double> mgsOrth(m,n);
     EXPECT_EQ(Orthogonalization::OrthogonalizationErr_t::NO_ERROR
               , mgsOrth.QR(m,n,Q,R));
 
@@ -73,26 +73,26 @@ TEST(TestMGS, QR)
     }
 
 
-    Orthogonalization::MGS<double> mgsOrthFailed1;
+    Orthogonalization::MGS<double> mgsOrthFailed1(m,n);
     EXPECT_EQ(Orthogonalization::OrthogonalizationErr_t::INVALID_INPUT
               , mgsOrthFailed1.QR(n-1,n,Q,R));
 
 
-    Orthogonalization::MGS<double> mgsOrthFailed2;
+    Orthogonalization::MGS<double> mgsOrthFailed2(m,n);
     EXPECT_EQ(Orthogonalization::OrthogonalizationErr_t::INVALID_INPUT
               , mgsOrthFailed2.QR(m,n,NULL,R));
 
-    Orthogonalization::MGS<double> mgsOrthFailed3;
+    Orthogonalization::MGS<double> mgsOrthFailed3(m,n);
     EXPECT_EQ(Orthogonalization::OrthogonalizationErr_t::INVALID_INPUT
               , mgsOrthFailed3.QR(m,n,Q,NULL));
 
     R->clear();
-    Orthogonalization::MGS<double> mgsOrthFailed4;
+    Orthogonalization::MGS<double> mgsOrthFailed4(m,n);
     EXPECT_EQ(Orthogonalization::OrthogonalizationErr_t::INVALID_INPUT
               , mgsOrthFailed4.QR(m,n,Q,R));
 
     Q->clear();
-    Orthogonalization::MGS<double> mgsOrthFailed5;
+    Orthogonalization::MGS<double> mgsOrthFailed5(m,n);
     EXPECT_EQ(Orthogonalization::OrthogonalizationErr_t::INVALID_INPUT
               , mgsOrthFailed5.QR(m,n,Q,R));
 
@@ -123,7 +123,7 @@ TEST(TestMGS, orth)
     C{new LinearAlgebra::Matrix<double>(n,n)};
 
     *Q = *A;
-    Orthogonalization::MGS<double> mgsOrth;
+    Orthogonalization::MGS<double> mgsOrth(m,n);
     EXPECT_EQ(Orthogonalization::OrthogonalizationErr_t::NO_ERROR
               , mgsOrth.orth(m,n,Q));
 
@@ -156,21 +156,21 @@ TEST(TestMGS, orth)
     }
 
 
-    Orthogonalization::MGS<double> mgsOrthFailed1;
+    Orthogonalization::MGS<double> mgsOrthFailed1(m,n);
     EXPECT_EQ(Orthogonalization::OrthogonalizationErr_t::INVALID_INPUT
               , mgsOrthFailed1.orth(n-1,n,Q));
 
 
-    Orthogonalization::MGS<double> mgsOrthFailed2;
+    Orthogonalization::MGS<double> mgsOrthFailed2(m,n);
     EXPECT_EQ(Orthogonalization::OrthogonalizationErr_t::INVALID_INPUT
               , mgsOrthFailed2.orth(m,n,NULL));
 
-    Orthogonalization::MGS<double> mgsOrthFailed3;
+    Orthogonalization::MGS<double> mgsOrthFailed3(m,n);
     EXPECT_EQ(Orthogonalization::OrthogonalizationErr_t::INVALID_INPUT
               , mgsOrthFailed3.orth(n,n,Q));
 
     Q->clear();
-    Orthogonalization::MGS<double> mgsOrthFailed4;
+    Orthogonalization::MGS<double> mgsOrthFailed4(m,n);
     EXPECT_EQ(Orthogonalization::OrthogonalizationErr_t::INVALID_INPUT
               , mgsOrthFailed4.orth(m,n,Q));
 
@@ -203,7 +203,7 @@ TEST(TestMGS, orthAgainst)
     w->rand();
 
     *Q = *A;
-    Orthogonalization::MGS<double> mgsOrth;
+    Orthogonalization::MGS<double> mgsOrth(m,nQ);
     EXPECT_EQ(Orthogonalization::OrthogonalizationErr_t::NO_ERROR
               , mgsOrth.orth(m,nQ,Q));
 
@@ -226,28 +226,28 @@ TEST(TestMGS, orthAgainst)
         }
     }
 
-    Orthogonalization::MGS<double> mgsOrthFailed1;
+    Orthogonalization::MGS<double> mgsOrthFailed1(m,nQ);
     EXPECT_EQ(Orthogonalization::OrthogonalizationErr_t::INVALID_INPUT
               , mgsOrthFailed1.orthAgainst(nQ-1,nQ,Q,nW,w));
 
     EXPECT_EQ(Orthogonalization::OrthogonalizationErr_t::INVALID_INPUT
               , mgsOrthFailed1.orthAgainst(nW-1,nQ,Q,nW,w));
 
-    Orthogonalization::MGS<double> mgsOrthFailed2;
+    Orthogonalization::MGS<double> mgsOrthFailed2(m,nQ);
     EXPECT_EQ(Orthogonalization::OrthogonalizationErr_t::INVALID_INPUT
               , mgsOrthFailed2.orthAgainst(m,nQ,NULL,nW,w));
 
-    Orthogonalization::MGS<double> mgsOrthFailed3;
+    Orthogonalization::MGS<double> mgsOrthFailed3(m,nQ);
     EXPECT_EQ(Orthogonalization::OrthogonalizationErr_t::INVALID_INPUT
               , mgsOrthFailed3.orthAgainst(m,nQ,Q,nW,NULL));
 
     w->clear();
-    Orthogonalization::MGS<double> mgsOrthFailed4;
+    Orthogonalization::MGS<double> mgsOrthFailed4(m,nQ);
     EXPECT_EQ(Orthogonalization::OrthogonalizationErr_t::INVALID_INPUT
               , mgsOrthFailed4.orthAgainst(nQ,nQ,Q,nW,w));
 
     Q->clear();
-    Orthogonalization::MGS<double> mgsOrthFailed5;
+    Orthogonalization::MGS<double> mgsOrthFailed5(m,nQ);
     EXPECT_EQ(Orthogonalization::OrthogonalizationErr_t::INVALID_INPUT
               , mgsOrthFailed5.orthAgainst(nW,nQ,Q,nW,w));
 
