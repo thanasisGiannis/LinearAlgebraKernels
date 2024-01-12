@@ -10,6 +10,7 @@
 #include <blas.hh>
 
 #include <thrust/host_vector.h>
+#include <thrust/extrema.h>
 
 #if defined(DEVICE)
 #include "Operations_Device.hpp"
@@ -44,7 +45,7 @@ namespace LinearAlgebra {
     }
 
     // just use host_vector and every call to blaspp will be forwared automatically
-    // as we use the same interface 
+    // as we use the same interface
     template <class fp>
     using vector = thrust::host_vector<fp>;
 #endif

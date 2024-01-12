@@ -13,12 +13,14 @@ namespace {
 namespace LinearAlgebra {
     static blas::Queue blasQueue(0);
     static lapack::Queue lapackQueue(0);
-    static lapack::device_info_int* d_info = blas::device_malloc<lapack::device_info_int>(0,lapackQueue);
+    static lapack::device_info_int* d_info =
+            blas::device_malloc<lapack::device_info_int>(0,lapackQueue);
 }
 
 namespace blas {
-/* 
-    Making the same interface for GPU and CPU blaspp library by expanding the interface
+/*
+    Making the same interface for GPU and CPU blaspp
+    library by expanding the interface
 */
 template<class fp>
 void copy(INT n, thrust::device_ptr<fp> &&x, INT incx,
@@ -32,7 +34,8 @@ fp dot(INT n, thrust::device_ptr<fp>&& x, INT incx,
 thrust::device_ptr<fp> &&y, INT incy)
 {
     fp result;
-    blas::dot(n, x.get(), incx, y.get(), incy, &result, LinearAlgebra::blasQueue);
+    blas::dot(n, x.get(), incx, y.get(), incy, &result,
+              LinearAlgebra::blasQueue);
     return result;
 }
 
@@ -53,9 +56,9 @@ namespace LinearAlgebra {
 namespace Operation {
     using namespace blas;
     using namespace lapack;
-    
+
     // in order to hide the translation from device_ptr to raw ptr
-    // from thrust to blaspp 
+    // from thrust to blaspp
     template <class fp>
     auto&& get_raw_data(fp&& x)
     {

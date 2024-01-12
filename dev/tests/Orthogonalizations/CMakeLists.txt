@@ -10,7 +10,7 @@ set(EXECUTABLES TestHouseholder
 include(GoogleTest)
 enable_testing()
   foreach (test ${EXECUTABLES})
-    add_executable(${test} ${test}.cu)
+    add_executable(${test} ${test}.cpp)
     target_link_libraries(
       ${test}
       GTest::gtest_main
