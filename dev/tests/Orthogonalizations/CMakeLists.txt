@@ -6,21 +6,16 @@ set(EXECUTABLES TestHouseholder
                 TestCholesky
                 TestMGS) # update with new tests here
 
-if(NOT gpu_acceleration)
-else()
-  #change .cpp to .cu
-  file(GLOB CPPFILES *.cpp)
-  list(TRANSFORM CPPFILES REPLACE "[.]cpp$" ".cu")
-endif()
-
 include(GoogleTest)
 enable_testing()
   foreach (test ${EXECUTABLES})
 
     if(NOT gpu_acceleration)
+      set_source_files_properties(${test}.cpp PROPERTIES LANGUAGE CXX)
       add_executable(${test} ${test}.cpp)
     else()
-      add_executable(${test} ${test}.cu)
+      set_source_files_properties(${test}.cpp PROPERTIES LANGUAGE CUDA)
+      add_executable(${test} ${test}.cpp)
     endif()
     target_link_libraries(
       ${test}
