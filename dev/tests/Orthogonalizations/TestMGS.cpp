@@ -221,7 +221,10 @@ TEST(TestMGS, orthAgainst)
     {
         for(uint j=0;j<nW;j++)
         {
-            auto dist = LinearAlgebra::Operation::dot(m, w->data()+0+j*(w->ld()), (INT)1, Q->data()+0+i*(Q->ld()), (INT)1);
+            auto dist = LinearAlgebra
+                        ::Operation
+                        ::dot(m, w->data()+0+j*(w->ld()), (INT)1,
+                              Q->data()+0+i*(Q->ld()), (INT)1);
             EXPECT_NEAR(0.0, dist ,1e-12*normInf);
         }
     }

@@ -11,8 +11,9 @@ template<class fp>
 class Householder {
 public:
     Householder(INT dim, INT nrhs);
-    OrthogonalizationErr_t QR(INT m, INT n, std::shared_ptr<LinearAlgebra::Matrix<fp>> Q_,
-            std::shared_ptr<LinearAlgebra::Matrix<fp>> R_);
+    OrthogonalizationErr_t QR(INT m, INT n,
+                              std::shared_ptr<LinearAlgebra::Matrix<fp>> Q_,
+                              std::shared_ptr<LinearAlgebra::Matrix<fp>> R_);
 
 private:
     INT rowMaxDim;

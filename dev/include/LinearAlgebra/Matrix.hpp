@@ -87,7 +87,7 @@ public:
         // First create an instance of an engine.
         std::random_device rnd_device;
         // Specify the engine and distribution.
-        std::mt19937 mersenne_engine {rnd_device()};  // Generates random integers
+        std::mt19937 mersenne_engine {rnd_device()};
         std::uniform_int_distribution<int> dist {-range, range};
 
         auto gen = [&dist, &mersenne_engine,&range](){

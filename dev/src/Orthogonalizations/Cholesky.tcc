@@ -46,7 +46,8 @@ QR(const INT m, const INT n,
                                     R->data(), R->ld());
 
     // R = chol(R) = chol(Q'*Q)
-    LinearAlgebra::Operation::potrf(LinearAlgebra::Operation::Uplo::Upper, n, R->data(), R->ld());	
+    LinearAlgebra::Operation::potrf(LinearAlgebra::Operation::Uplo::Upper, n,
+                                    R->data(), R->ld());
 
     // Q = Q/R;
     LinearAlgebra::Operation::trsm(LinearAlgebra::Operation::Layout::ColMajor,

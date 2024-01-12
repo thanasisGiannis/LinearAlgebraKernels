@@ -7,7 +7,7 @@
 #include <iostream>
 #include <memory>
 
-TEST(TestCholesky, Cholesky) 
+TEST(TestCholesky, Cholesky)
 {
 
     Orthogonalization::Cholesky<double> cholOrth(100,100);
@@ -61,7 +61,8 @@ TEST(TestCholesky, QR)
                                     LinearAlgebra::Operation::Uplo::Upper,
                                     LinearAlgebra::Operation::Op::NoTrans,
                                     LinearAlgebra::Operation::Diag::NonUnit,
-                                    m,n,1.0,R->data(), R->ld(),C->data(),C->ld());
+                                    m,n,1.0,R->data(), R->ld(),
+                                    C->data(),C->ld());
 
     for(uint i=0;i<m;i++)
     {

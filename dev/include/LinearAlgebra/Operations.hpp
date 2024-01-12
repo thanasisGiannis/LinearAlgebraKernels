@@ -20,7 +20,7 @@
 
 namespace {
     typedef unsigned int UINT;
-    typedef int64_t INT; // used by mkl library-strongly connected to system arch
+    typedef int64_t INT; //used by mkl library-strongly connected to system arch
 }
 
 
@@ -44,8 +44,8 @@ namespace LinearAlgebra {
         using namespace lapack;
     }
 
-    // just use host_vector and every call to blaspp will be forwared automatically
-    // as we use the same interface
+    // just use host_vector and every call to blaspp will be forwared
+    // automatically as we use the same interface
     template <class fp>
     using vector = thrust::host_vector<fp>;
 #endif
