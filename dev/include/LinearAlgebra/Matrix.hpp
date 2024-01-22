@@ -55,6 +55,16 @@ public:
         }
     }
 
+    void resizeCols(INT num){raw_data.resize(rows*num);}
+    void reserveCols(INT num){raw_data.reserve(rows*num);}
+    void insertCols(std::shared_ptr<LinearAlgebra::Matrix<fp>> v)
+    {
+        if(this->rows== v->Rows()){
+            LinearAlgebra::copy(v->begin(), v->end(), this->end());
+            cols += v->Cols();
+        }
+    }
+
     auto size(){return static_cast<INT>(raw_data.size());}
     auto begin()
     {
@@ -123,7 +133,10 @@ std::ostream& operator<<(std::ostream&os , LinearAlgebra::Matrix<fp> &A)
     {
         for(auto j=0; j<n; j++)
         {
-            os << A[i+j*ldA] << " ";
+            os << std::scientific
+               << std::setprecision(3)
+               << std::showpos
+               << " " << A[i+j*ldA] << " ";
         }
         os << " ; " << std::endl;
     }

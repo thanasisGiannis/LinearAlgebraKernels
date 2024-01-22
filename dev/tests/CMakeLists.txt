@@ -6,3 +6,4 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Orthogonalizations)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/ProjectionSubspace)
