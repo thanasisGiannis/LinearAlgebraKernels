@@ -13,6 +13,24 @@ TEST(TestDavidsonSubspace, DavidsonSubspace) {
     EXPECT_EQ(1,davidsonSubspace.getRawBasisSize());
 }
 
+TEST(TestDavidsonSubspace, biggerBasisThanDimension) {
+
+    ProjectionSubspace::DavidsonSubspace<double> davidsonSubspace(10,10,5);
+    EXPECT_EQ(10,
+    davidsonSubspace.getMaxBasisSize()*davidsonSubspace.getBlockBasisSize());
+
+    EXPECT_EQ(10, davidsonSubspace.getBlockBasisSize());
+
+    EXPECT_EQ(1, davidsonSubspace.getMaxBasisSize());
+}
+
+TEST(TestDavidsonSubspace, biggerBlockSizeThanDimension) {
+
+    ProjectionSubspace::DavidsonSubspace<double> davidsonSubspace(10,15,5);
+    EXPECT_EQ(10,
+    davidsonSubspace.getMaxBasisSize()*davidsonSubspace.getBlockBasisSize());
+}
+
 TEST(TestDavidsonSubspace, updateBasis) {
 
     INT dim=10;
@@ -64,4 +82,22 @@ TEST(TestDavidsonSubspace, updateBasis) {
             }
         }
     }
+}
+
+TEST(TestDavidsonSubspace, restartBasis) {
+
+    INT dim=10;
+    INT blockSize = 3;
+    INT maxBasisSize = 4;
+    ProjectionSubspace::DavidsonSubspace<double> davidsonSubspace(dim,blockSize,maxBasisSize);
+    EXPECT_EQ(1*blockSize,davidsonSubspace.getRawBasisSize());
+
+    std::shared_ptr<LinearAlgebra::Matrix<double>>
+    v{new LinearAlgebra::Matrix<double>(dim,blockSize)};
+    v->rand();
+
+    davidsonSubspace.updateBasis(v);
+    EXPECT_EQ(2*blockSize,davidsonSubspace.getRawBasisSize());
+
+
 }

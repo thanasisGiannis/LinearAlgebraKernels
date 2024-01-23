@@ -27,6 +27,8 @@ public:
     std::shared_ptr<LinearAlgebra::Matrix<fp>> getRawBasisMatrix();
     INT getRawBasisSize();
     void updateBasis(std::shared_ptr<LinearAlgebra::Matrix<fp>> w);
+    INT getMaxBasisSize();
+    INT getBlockBasisSize();
 
 };
 
