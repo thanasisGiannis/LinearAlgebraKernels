@@ -31,27 +31,34 @@ public:
         : rows{rows_}
         , cols{cols_}
     {
-        raw_data.resize(rows*cols);
-        LinearAlgebra::fill(raw_data.begin(),
-                            raw_data.end(),
-                            static_cast<fp>(0.0));
+        if(rows*cols>0)
+        {
+            raw_data.resize(rows*cols);
+            LinearAlgebra::fill(raw_data.begin(),
+                                raw_data.end(),
+                                static_cast<fp>(0.0));
+        }
     }
 
     Matrix(INT rows_, INT cols_, std::list<fp> l)
         : rows{rows_}
         , cols{cols_}
     {
-        if( static_cast<INT>(l.size()) == rows_*cols_)
+        if(rows*cols>0)
         {
-            for(fp item : l)
+
+            if( static_cast<INT>(l.size()) == rows_*cols_)
             {
-                raw_data.push_back(item);
+                for(fp item : l)
+                {
+                    raw_data.push_back(item);
+                }
+                l.clear();
             }
-            l.clear();
-        }
-        if(raw_data.size()!=rows_*cols_)
-        {
-            raw_data.resize(rows_*cols_);
+            if(raw_data.size()!=rows_*cols_)
+            {
+                raw_data.resize(rows_*cols_);
+            }
         }
     }
 
@@ -59,13 +66,22 @@ public:
     void reserveCols(INT num){raw_data.reserve(rows*num);}
     void insertCols(std::shared_ptr<LinearAlgebra::Matrix<fp>> v)
     {
-        if(this->rows== v->Rows()){
-            LinearAlgebra::copy(v->begin(), v->end(), this->end());
+
+        if(this->Rows() == v->Rows()){
+            if(this->cols <=0)
+            {
+                raw_data.resize((v->Rows())*(v->Cols()));
+                LinearAlgebra::copy(v->begin(), v->end(), this->begin());
+            }
+            else
+            {
+                raw_data.push_back(*(v->data()));
+            }
             cols += v->Cols();
         }
     }
 
-    auto size(){return static_cast<INT>(raw_data.size());}
+    virtual INT size(){return static_cast<INT>(raw_data.size());}
     auto begin()
     {
         return raw_data.begin();
@@ -79,13 +95,12 @@ public:
         return raw_data.data();
     }
     auto operator[](INT index) {return raw_data[index];}
-    auto Rows(){return rows;}
-    auto Cols(){return cols;}
-    auto clear()
+    virtual INT Rows(){return rows;}
+    virtual INT Cols(){return cols;}
+    virtual void clear()
     {
-        rows = 0;
         cols=0;
-        return raw_data.clear();
+        raw_data.clear();
     }
 
     void rand()
@@ -134,7 +149,7 @@ std::ostream& operator<<(std::ostream&os , LinearAlgebra::Matrix<fp> &A)
         for(auto j=0; j<n; j++)
         {
             os << std::scientific
-               << std::setprecision(3)
+               << std::setprecision(4)
                << std::showpos
                << " " << A[i+j*ldA] << " ";
         }
