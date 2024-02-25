@@ -3,4 +3,10 @@ dist
 *.pro
 .vscod
 .vscode/*
-
+*.cflags
+*.config
+*.creator
+*.cxxflags
+*.files
+*.includes
+*.creator.user
