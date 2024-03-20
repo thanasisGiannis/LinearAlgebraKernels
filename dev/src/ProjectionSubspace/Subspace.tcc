@@ -74,10 +74,8 @@ void Subspace::SubspaceBasis<fp>::
 clear()
 {
     basisSize=0;
-    LinearAlgebra::fill(static_cast<LinearAlgebra::
-                                        Matrix<fp>>(*this).begin(),
-                        static_cast<LinearAlgebra::
-                                        Matrix<fp>>(*this).end(),
+    LinearAlgebra::fill(this->begin(),
+                        this->end(),
                         static_cast<fp>(0.0));
 }
 
@@ -174,10 +172,8 @@ void Subspace::SubspaceProjection<fp>::
 clear()
 {
     basisSize=0;
-    LinearAlgebra::fill(static_cast<LinearAlgebra::
-                                        Matrix<fp>>(*this).begin(),
-                        static_cast<LinearAlgebra::
-                                        Matrix<fp>>(*this).end(),
+    LinearAlgebra::fill(this->begin(),
+                        this->end(),
                         static_cast<fp>(0.0));
 }
 
@@ -215,6 +211,7 @@ updateProjection(
 
     }
 }
+
 //================================
 /*
  * class Subspace::SubspaceHandler
@@ -256,7 +253,7 @@ updateBasis(
 std::shared_ptr<Subspace::SubspaceBasis<fp>> V,
 std::shared_ptr<LinearAlgebra::Matrix<fp>> w)
 {
-    if(V->Rows() == w->Rows())
+    if(V->Rows() == w->Rows() && V->Cols()<V->getMaxBasisSize())
     {
         V->insertDirection(w);
         basisSize++;
@@ -272,8 +269,28 @@ std::shared_ptr<Subspace::SubspaceProjection<fp>> H)
 {
     if(Aw->Cols() < 0) return;
 
-    if(V->Cols()>0)
+    if(V->Cols()>0 && V->Cols()<V->getMaxBasisSize())
     {
         H->updateProjection(V,Aw);
     }
 }
+
+template<class fp>
+void Subspace::SubspaceHandler<fp>::
+restartBasis(std::shared_ptr<Subspace::SubspaceBasis<fp>> V,
+             std::shared_ptr<LinearAlgebra::Matrix<fp>> Xprev,
+             std::shared_ptr<LinearAlgebra::Matrix<fp>> X,
+             std::shared_ptr<LinearAlgebra::Matrix<fp>> w)
+{
+    V->clear();
+
+    orthDirection(V,Xprev);
+    updateBasis(V,Xprev);
+
+    orthDirection(V,X);
+    updateBasis(V,X);
+
+    orthDirection(V,w);
+    updateBasis(V,w);
+}
+

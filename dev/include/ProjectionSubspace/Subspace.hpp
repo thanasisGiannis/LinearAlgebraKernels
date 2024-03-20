@@ -63,7 +63,6 @@ private:
     INT basisSize;    // current basis size
 
     Orthogonalization::MGS<fp> mgsOrth;
-
 public:
     SubspaceHandler(std::shared_ptr<SubspaceBasis<fp>> V_);
     void updateBasis(std::shared_ptr<Subspace::
@@ -79,6 +78,11 @@ public:
                             ::SubspaceBasis<fp>> V,
                           std::shared_ptr<Subspace
                             ::SubspaceProjection<fp>> H);
+
+    void restartBasis(std::shared_ptr<Subspace::SubspaceBasis<fp>> V,
+                      std::shared_ptr<LinearAlgebra::Matrix<fp>> Xprev,
+                      std::shared_ptr<LinearAlgebra::Matrix<fp>> X,
+                      std::shared_ptr<LinearAlgebra::Matrix<fp>> w);
 
 };
 

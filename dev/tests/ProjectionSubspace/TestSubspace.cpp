@@ -156,3 +156,106 @@ TEST(TestSubspaceHandler, updateProjection) {
         }
     }
 }
+
+
+TEST(TestSubspaceHandler, updateProjectionMaxBasis) {
+
+    INT rows = 10;
+    INT blockCols = 1;
+    INT maxCols = 5;
+
+    std::shared_ptr<Subspace::SubspaceBasis<double>>
+    V{new Subspace
+        ::SubspaceBasis<double>(rows,blockCols,maxCols)};
+
+    std::shared_ptr<Subspace::SubspaceProjection<double>>
+    H{new Subspace
+        ::SubspaceProjection<double>(blockCols,maxCols)};
+
+    Subspace::SubspaceHandler<double> davidsonSubspace(V);
+
+    std::shared_ptr<LinearAlgebra::Matrix<double>>
+    w{new LinearAlgebra::Matrix<double>(rows, blockCols)};
+
+    std::shared_ptr<LinearAlgebra::Matrix<double>>
+    Aw{new LinearAlgebra::Matrix<double>(rows, blockCols)};
+
+    EXPECT_NE(V->Cols() , V->getMaxBasisSize());
+
+    for(auto j=0; j<maxCols; j++)
+    {
+        w->rand();
+        Aw->rand();
+        davidsonSubspace.orthDirection(V,w);
+        davidsonSubspace.updateBasis(V,w);
+        davidsonSubspace.updateProjection(Aw,V,H);
+    }
+
+    EXPECT_EQ(V->Cols() , V->getMaxBasisSize());
+
+    // this new update should not proceed
+    w->rand();
+    Aw->rand();
+    davidsonSubspace.orthDirection(V,w);
+    davidsonSubspace.updateBasis(V,w);
+    davidsonSubspace.updateProjection(Aw,V,H);
+    EXPECT_EQ(V->Cols(), V->getMaxBasisSize());
+}
+
+TEST(TestSubspaceHandler, restartBasis) {
+
+    INT rows = 10;
+    INT blockCols = 1;
+    INT maxCols = 5;
+
+    std::shared_ptr<Subspace::SubspaceBasis<double>>
+    V{new Subspace
+        ::SubspaceBasis<double>(rows,blockCols,maxCols)};
+
+    std::shared_ptr<Subspace::SubspaceProjection<double>>
+    H{new Subspace
+        ::SubspaceProjection<double>(blockCols,maxCols)};
+
+    Subspace::SubspaceHandler<double> davidsonSubspace(V);
+
+
+    std::shared_ptr<LinearAlgebra::Matrix<double>>
+    w{new LinearAlgebra::Matrix<double>(rows, blockCols)};
+
+    std::shared_ptr<LinearAlgebra::Matrix<double>>
+    Aw{new LinearAlgebra::Matrix<double>(rows, blockCols)};
+
+    EXPECT_NE(V->Cols() , V->getMaxBasisSize());
+
+    for(auto j=0; j<maxCols; j++)
+    {
+        w->rand();
+        Aw->rand();
+        davidsonSubspace.orthDirection(V,w);
+        davidsonSubspace.updateBasis(V,w);
+        davidsonSubspace.updateProjection(Aw,V,H);
+    }
+
+    EXPECT_EQ(V->Cols() , V->getMaxBasisSize());
+
+    // this new update should not proceed
+    w->rand();
+    Aw->rand();
+    davidsonSubspace.orthDirection(V,w);
+    davidsonSubspace.updateBasis(V,w);
+    davidsonSubspace.updateProjection(Aw,V,H);
+    EXPECT_EQ(V->Cols(), V->getMaxBasisSize());
+
+    std::shared_ptr<LinearAlgebra::Matrix<double>>
+    Xprev{new LinearAlgebra::Matrix<double>(rows, blockCols)};
+
+    std::shared_ptr<LinearAlgebra::Matrix<double>>
+    X{new LinearAlgebra::Matrix<double>(rows, blockCols)};
+
+    Xprev->rand();
+    X->rand();
+    w->rand();
+
+    davidsonSubspace.restartBasis(V,Xprev, X, w);
+    EXPECT_EQ(V->Cols(), 3*blockCols);
+}
