@@ -111,6 +111,7 @@ SubspaceProjection(INT blockSize_, INT maxBasisSize_)
                                 blockSize_*maxBasisSize_)
 {
 }
+
 template<class fp>
 INT Subspace::SubspaceProjection<fp>::
 getBasisSize()
@@ -224,6 +225,7 @@ SubspaceHandler(std::shared_ptr<Subspace::SubspaceBasis<fp>> V)
     , blockSize{V->getBlockBasisSize()}
     , maxBasisSize{V->getMaxBasisSize()}
     , basisSize{V->getBasisSize()}
+    , Av{new LinearAlgebra::Matrix<double>(V->Rows(), 1*(V->getBlockBasisSize()))}
     , mgsOrth(dim, blockSize*maxBasisSize)
 {
 }
@@ -253,7 +255,7 @@ updateBasis(
 std::shared_ptr<Subspace::SubspaceBasis<fp>> V,
 std::shared_ptr<LinearAlgebra::Matrix<fp>> w)
 {
-    if(V->Rows() == w->Rows() && V->Cols()<V->getMaxBasisSize())
+    if(V->Rows() == w->Rows() && (V->Cols()<V->getMaxBasisSize()))
     {
         V->insertDirection(w);
         basisSize++;
@@ -269,7 +271,7 @@ std::shared_ptr<Subspace::SubspaceProjection<fp>> H)
 {
     if(Aw->Cols() < 0) return;
 
-    if(V->Cols()>0 && V->Cols()<V->getMaxBasisSize())
+    if(V->Cols()>0 && (H->Cols()<H->getMaxBasisSize()))
     {
         H->updateProjection(V,Aw);
     }
@@ -278,19 +280,66 @@ std::shared_ptr<Subspace::SubspaceProjection<fp>> H)
 template<class fp>
 void Subspace::SubspaceHandler<fp>::
 restartBasis(std::shared_ptr<Subspace::SubspaceBasis<fp>> V,
+             std::shared_ptr<Subspace::SubspaceProjection<fp>> H,
+             /* this should be used by the operator-matrix */
              std::shared_ptr<LinearAlgebra::Matrix<fp>> Xprev,
              std::shared_ptr<LinearAlgebra::Matrix<fp>> X,
              std::shared_ptr<LinearAlgebra::Matrix<fp>> w)
 {
+    // ToDo: change with OPERATOR A the AV = A*V;
+    std::shared_ptr<LinearAlgebra::Matrix<double>>
+    A{new LinearAlgebra::Matrix<double>(V->Rows(), V->Rows())};
+    A->rand();
+
+
     V->clear();
+    H->clear();
 
     orthDirection(V,Xprev);
     updateBasis(V,Xprev);
 
+    LinearAlgebra::Operation::gemm(blas::Layout::ColMajor,
+                                   blas::Op::NoTrans,
+                                   blas::Op::NoTrans,
+                                   A->Rows(), V->Cols(), A->Cols(),
+                                   static_cast<double>(1.0),
+                                   A->data(), A->ld(),
+                                   Xprev->data(), Xprev->ld(),
+                                   static_cast<double>(0.0),
+                                   Av->data(), Av->ld());
+
+    updateProjection(Av,V,H);
+
+
     orthDirection(V,X);
     updateBasis(V,X);
 
+    LinearAlgebra::Operation::gemm(blas::Layout::ColMajor,
+                                   blas::Op::NoTrans,
+                                   blas::Op::NoTrans,
+                                   A->Rows(), X->Cols(), A->Cols(),
+                                   static_cast<double>(1.0),
+                                   A->data(), A->ld(),
+                                   X->data(), X->ld(),
+                                   static_cast<double>(0.0),
+                                   Av->data(), Av->ld());
+
+    updateProjection(Av,V,H);
+
     orthDirection(V,w);
     updateBasis(V,w);
-}
 
+    LinearAlgebra::Operation::gemm(blas::Layout::ColMajor,
+                                   blas::Op::NoTrans,
+                                   blas::Op::NoTrans,
+                                   A->Rows(), w->Cols(), A->Cols(),
+                                   static_cast<double>(1.0),
+                                   A->data(), A->ld(),
+                                   w->data(), w->ld(),
+                                   static_cast<double>(0.0),
+                                   Av->data(), Av->ld());
+
+    updateProjection(Av,V,H);
+
+
+}

@@ -225,6 +225,7 @@ TEST(TestSubspaceHandler, restartBasis) {
     std::shared_ptr<LinearAlgebra::Matrix<double>>
     Aw{new LinearAlgebra::Matrix<double>(rows, blockCols)};
 
+
     EXPECT_NE(V->Cols() , V->getMaxBasisSize());
 
     for(auto j=0; j<maxCols; j++)
@@ -234,9 +235,11 @@ TEST(TestSubspaceHandler, restartBasis) {
         davidsonSubspace.orthDirection(V,w);
         davidsonSubspace.updateBasis(V,w);
         davidsonSubspace.updateProjection(Aw,V,H);
+
     }
 
-    EXPECT_EQ(V->Cols() , V->getMaxBasisSize());
+    EXPECT_EQ(V->Cols(), V->getMaxBasisSize());
+    EXPECT_EQ(H->Cols(), V->getMaxBasisSize());
 
     // this new update should not proceed
     w->rand();
@@ -244,7 +247,9 @@ TEST(TestSubspaceHandler, restartBasis) {
     davidsonSubspace.orthDirection(V,w);
     davidsonSubspace.updateBasis(V,w);
     davidsonSubspace.updateProjection(Aw,V,H);
+
     EXPECT_EQ(V->Cols(), V->getMaxBasisSize());
+    EXPECT_EQ(H->Cols(), V->getMaxBasisSize());
 
     std::shared_ptr<LinearAlgebra::Matrix<double>>
     Xprev{new LinearAlgebra::Matrix<double>(rows, blockCols)};
@@ -256,6 +261,44 @@ TEST(TestSubspaceHandler, restartBasis) {
     X->rand();
     w->rand();
 
-    davidsonSubspace.restartBasis(V,Xprev, X, w);
+
+
+    davidsonSubspace.restartBasis(V,H,Xprev, X, w);
     EXPECT_EQ(V->Cols(), 3*blockCols);
+    EXPECT_EQ(H->Cols(), 3*blockCols);
+    EXPECT_EQ(H->Rows(), 3*blockCols);
+
+
+    std::shared_ptr<LinearAlgebra::Matrix<double>>
+    VTV{new LinearAlgebra::Matrix<double>(V->Cols(), V->Cols())};
+
+    LinearAlgebra::Operation::gemm(blas::Layout::ColMajor,
+                                   blas::Op::Trans,
+                                   blas::Op::NoTrans,
+                                   V->Cols(), V->Cols(), V->Rows(),
+                                   static_cast<double>(1.0),
+                                   V->data(), V->ld(),
+                                   V->data(), V->ld(),
+                                   static_cast<double>(0.0),
+                                   VTV->data(), VTV->ld());
+
+
+    auto iter = LinearAlgebra::max_element(V->begin(), V->end());
+    double normInf = *(iter);
+
+    for(uint i=0;i<V->Cols();i++)
+    {
+        for(uint j=0;j<V->Cols();j++)
+        {
+            if(i==j)
+            {
+                EXPECT_NEAR(1.0,*(VTV->data()+i+j*(VTV->ld())),1e-12*normInf);
+            }
+            else
+            {
+                EXPECT_NEAR(0.0,*(VTV->data()+i+j*(VTV->ld())),1e-12*normInf);
+            }
+        }
+    }
+
 }

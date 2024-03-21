@@ -62,6 +62,7 @@ private:
     INT maxBasisSize; // number of max block vectors in basis before restart
     INT basisSize;    // current basis size
 
+    std::shared_ptr<LinearAlgebra::Matrix<fp>> Av;
     Orthogonalization::MGS<fp> mgsOrth;
 public:
     SubspaceHandler(std::shared_ptr<SubspaceBasis<fp>> V_);
@@ -80,6 +81,8 @@ public:
                             ::SubspaceProjection<fp>> H);
 
     void restartBasis(std::shared_ptr<Subspace::SubspaceBasis<fp>> V,
+                      std::shared_ptr<Subspace::SubspaceProjection<fp>> H,
+                      /* this should be used by the operator-matrix */
                       std::shared_ptr<LinearAlgebra::Matrix<fp>> Xprev,
                       std::shared_ptr<LinearAlgebra::Matrix<fp>> X,
                       std::shared_ptr<LinearAlgebra::Matrix<fp>> w);
